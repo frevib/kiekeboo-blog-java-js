@@ -1,0 +1,5 @@
+*.class
+target/*
+*.sh
+.idea/*
+.DS_Store

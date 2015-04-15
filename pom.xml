@@ -36,7 +36,7 @@
       <version>${spring.version}</version>
     </dependency>
 
-<!--Java servlet libraries-->
+    <!--Java servlet libraries-->
       <dependency>
           <groupId>javax.servlet</groupId>
           <artifactId>servlet-api</artifactId>
@@ -75,6 +75,12 @@
         <version>2.5.0</version>
     </dependency>
 
+      <!--<dependency>-->
+          <!--<groupId>org.slf4j</groupId>-->
+          <!--<artifactId>slf4j-simple</artifactId>-->
+          <!--<version>1.7.7</version>-->
+      <!--</dependency>-->
+
   </dependencies>
 
     <!--build configuration-->
@@ -89,6 +95,8 @@
                 <server>tomcatserver</server>
                 <update>true</update>
                 <path>/kiekeboo-app-1.0-SNAPSHOT</path>
+
+
             </configuration>
         </plugin>
       </plugins>

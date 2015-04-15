@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class TestController {
 
+    @RequestMapping("/")
+    public String printBeginpage() {
+        return "beginpage";
+    }
+
     // HTTP test request
 	@RequestMapping("/kiekeboo")
 	public String printKiekeboo(ModelMap model) {

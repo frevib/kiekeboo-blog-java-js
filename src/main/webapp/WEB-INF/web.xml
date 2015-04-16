@@ -1,11 +1,11 @@
 <web-app version="2.4"
 	xmlns="http://java.sun.com/xml/ns/j2ee"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
-	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee">
 
 	<display-name>Kiekebook web application</display-name>
 
+    <!-- CORS filter config-->
     <filter>
         <filter-name>CORSFilter</filter-name>
         <filter-class>com.kiekeboo.app.filter.CORSFilter</filter-class>
@@ -16,7 +16,7 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-
+    <!-- Servlet config-->
     <servlet>
 		<servlet-name>kiekeboo-test</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -28,15 +28,14 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/kiekeboo-test-servlet.xml</param-value>
-    </context-param>
- 
+    <!-- Context config -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/test-service.xml</param-value>
+    </context-param>
 
 </web-app>

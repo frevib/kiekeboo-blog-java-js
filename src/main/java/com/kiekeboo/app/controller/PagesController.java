@@ -1,6 +1,6 @@
 package com.kiekeboo.app.controller;
 
-import com.kiekeboo.app.DOA.DaoStubs;
+import com.kiekeboo.app.DAO.DaoStubs;
 import com.kiekeboo.app.model.BlogPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

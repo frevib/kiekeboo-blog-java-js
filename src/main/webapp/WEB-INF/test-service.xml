@@ -16,7 +16,7 @@
               <!--</property>-->
        <!--</bean>-->
 
-       <bean id="daoStubs" class="com.kiekeboo.app.DOA.DaoStubs">
+       <bean id="daoStubs" class="com.kiekeboo.app.DAO.DaoStubs">
 
        </bean>
 

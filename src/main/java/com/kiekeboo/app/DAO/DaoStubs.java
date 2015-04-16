@@ -1,4 +1,4 @@
-package com.kiekeboo.app.DOA;
+package com.kiekeboo.app.DAO;
 
 import com.kiekeboo.app.model.BlogPost;
 

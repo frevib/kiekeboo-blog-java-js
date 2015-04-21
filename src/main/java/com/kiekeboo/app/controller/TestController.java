@@ -1,7 +1,10 @@
 package com.kiekeboo.app.controller;
 
 import com.kiekeboo.app.model.BlogPost;
+import com.kiekeboo.app.services.BlogService;
 import com.kiekeboo.app.services.ServiceStubs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,12 +14,19 @@ import org.springframework.web.bind.annotation.*;
 
 import com.kiekeboo.app.model.TestModel;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/test")
 public class TestController {
 
+    private final Logger logger = LoggerFactory.getLogger(TestController.class);
+
     @Autowired
     ServiceStubs serviceStubs;
+
+    @Autowired
+    BlogService blogService;
 
     @ModelAttribute("blogpost")
     public BlogPost getBlogPost() {
@@ -53,6 +63,17 @@ public class TestController {
         BlogPost modelpost = blogPost;
 //        boolean status = serviceStubs.addBlogPostToDatabase(blogPost);
         return modelpost;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/getbloglist")
+    public @ResponseBody List<BlogPost> getBlogPostId(
+            Model model) {
+        logger.info("/getbloglist");
+
+        List<BlogPost> blogList = blogService.getBlogList();
+//        BlogPost blogPost = serviceStubs.getBlogPostFromDatabase();
+
+        return blogList;
     }
 
 }

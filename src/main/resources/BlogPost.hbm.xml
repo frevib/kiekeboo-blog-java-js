@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.kiekeboo.app.model">
+    <class name="BlogPost" table="BLOGPOST">
+        <id name="id" column="blog_id">
+            <generator class="native"/>
+        </id>
+        <property name="title" column="title" />
+        <property name="contents" column="contents" />
+    </class>
+</hibernate-mapping>

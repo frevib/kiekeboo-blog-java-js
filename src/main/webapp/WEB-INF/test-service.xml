@@ -8,14 +8,14 @@
         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
        <!-- Commented out because not needed for service -->
-       <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-              <!--<property name="prefix">-->
-                     <!--<value>/WEB-INF/pages/</value>-->
-              <!--</property>-->
-              <!--<property name="suffix">-->
-                     <!--<value>.jsp</value>-->
-              <!--</property>-->
-       <!--</bean>-->
+       <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+              <property name="prefix">
+                     <value>/WEB-INF/pages/</value>
+              </property>
+              <property name="suffix">
+                     <value>.jsp</value>
+              </property>
+       </bean>
 
        <bean id="daoStubs" class="com.kiekeboo.app.services.ServiceStubs">
               <property name="inject" value="----INJECT-----!!!!!"/>

@@ -9,10 +9,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,26 +17,31 @@ import java.util.List;
 @RequestMapping("/blog")
 public class BlogController {
 
-    private final Logger logger = LoggerFactory.getLogger(BlogController.class);
-
     @Autowired
     private ServiceStubs serviceStubs;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/getpost/{id}")
-    public @ResponseBody BlogPost getBlogPostId(
-            Model model,
-            @PathVariable int id) {
-        logger.info("/getpost/{}", id);
+    private final Logger logger = LoggerFactory.getLogger(BlogController.class);
 
-        BlogPost blogPost = serviceStubs.getBlogPostFromDatabase();
-
-        return blogPost;
+    @ModelAttribute("blogpost")
+    public BlogPost getBlogPost() {
+        return new BlogPost();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/getpost")
     public @ResponseBody BlogPost getBlogPost(
             Model model) {
         logger.info("/getpost/");
+
+        BlogPost blogPost = serviceStubs.getBlogPostFromDatabase();
+
+        return blogPost;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/getpost/{id}")
+    public @ResponseBody BlogPost getBlogPostId(
+            Model model,
+            @PathVariable int id) {
+        logger.info("/getpost/{}", id);
 
         BlogPost blogPost = serviceStubs.getBlogPostFromDatabase();
 
@@ -56,7 +58,7 @@ public class BlogController {
     @RequestMapping(method = RequestMethod.POST, value = "/addpost")
     public @ResponseBody boolean addPost(
             Model model,
-            @PathVariable BlogPost blogPost) {
+            @ModelAttribute BlogPost blogPost) {
         boolean status = serviceStubs.addBlogPostToDatabase(blogPost);
         return status;
     }

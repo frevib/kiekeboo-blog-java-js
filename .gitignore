@@ -3,3 +3,4 @@ target/*
 *.sh
 .idea/*
 .DS_Store
+database.propterties

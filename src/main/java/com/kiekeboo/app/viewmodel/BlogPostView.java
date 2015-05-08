@@ -1,15 +1,14 @@
-package com.kiekeboo.app.model;
-
+package com.kiekeboo.app.viewmodel;
 
 import java.util.Date;
 
-public class BlogPost {
+public class BlogPostView {
     private int id;
     private String title;
     private String contents;
     private Date date;
 
-    public BlogPost() {
+    public BlogPostView() {
         this.date = new Date();
     }
 

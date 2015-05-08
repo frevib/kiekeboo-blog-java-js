@@ -10,9 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/**
- * Created by hdv on 21/04/15.
- */
 public class BlogService {
 
     private SessionFactory sessionFactory;
@@ -21,7 +18,6 @@ public class BlogService {
         this.sessionFactory = sessionFactory;
     }
 
-//    @Override
     @Transactional
     public List<BlogPost> getLatestBlogPosts() throws HibernateException {
         @SuppressWarnings("unchecked")

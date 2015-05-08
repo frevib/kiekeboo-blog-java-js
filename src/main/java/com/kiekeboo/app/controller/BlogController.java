@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/blog")
 public class BlogController {
 
@@ -32,15 +32,15 @@ public class BlogController {
 
     private final Logger logger = LoggerFactory.getLogger(BlogController.class);
 
-    @RequestMapping(method = RequestMethod.GET, value = "/getblogpost")
-    public @ResponseBody BlogPost getBlogPost(Model model) {
+    @RequestMapping(method = RequestMethod.GET, value = "*")
+    public BlogPost getBlogPost(Model model) {
         logger.info("URL: /getpost/");
         BlogPost blogPost = serviceStubs.getBlogPostFromDatabase();
         return blogPost;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/getblogpost/{id}")
-    public @ResponseBody BlogPost getBlogPostById(Model model, @PathVariable int id) {
+    public BlogPost getBlogPostById(Model model, @PathVariable int id) {
         logger.info("URL: /getpost/{}", id);
         BlogPost blogPost = null;
         try {
@@ -53,8 +53,7 @@ public class BlogController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/getlatestblogposts")
-    public @ResponseBody
-    List<BlogPost> getLatestBlogPosts(Model model) {
+    public List<BlogPost> getLatestBlogPosts(Model model) {
         List<BlogPost> blogPostList = null;
         try {
             blogPostList = blogService.getLatestBlogPosts();
@@ -66,7 +65,7 @@ public class BlogController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/saveblogpost")
-    public @ResponseBody boolean saveBlogPost(Model model, @ModelAttribute("blogpost") BlogPost blogPost, BindingResult result) {
+    public boolean saveBlogPost(Model model, @ModelAttribute("blogpost") BlogPost blogPost, BindingResult result) {
         try {
             blogService.saveBlogPost(blogPost);
             return true;

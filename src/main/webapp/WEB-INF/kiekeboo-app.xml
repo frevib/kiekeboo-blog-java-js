@@ -43,8 +43,4 @@
               <property name="password" value="${database.password}"/>
        </bean>
 
-       <bean id="daoStubs" class="com.kiekeboo.app.services.ServiceStubs">
-              <property name="inject" value="----INJECT-----!!!!!"/>
-       </bean>
-
 </beans>

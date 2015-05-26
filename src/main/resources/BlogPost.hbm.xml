@@ -10,5 +10,6 @@
         <property name="title" column="title" />
         <property name="contents" column="contents" />
         <property name="date" column="datetime"/>
+        <property name="writer" column="writer"/>
     </class>
 </hibernate-mapping>

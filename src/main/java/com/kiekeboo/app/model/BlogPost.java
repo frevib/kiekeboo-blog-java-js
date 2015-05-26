@@ -8,10 +8,8 @@ public class BlogPost {
     private String title;
     private String contents;
     private Date date;
+    private String writer;
 
-    public BlogPost() {
-        this.date = new Date();
-    }
 
     public int getId() {
         return id;
@@ -43,5 +41,13 @@ public class BlogPost {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getWriter() {
+        return writer;
+    }
+
+    public void setWriter(String writer) {
+        this.writer = writer;
     }
 }

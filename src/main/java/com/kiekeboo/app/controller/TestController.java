@@ -24,9 +24,6 @@ public class TestController {
     private final Logger logger = LoggerFactory.getLogger(TestController.class);
 
     @Autowired
-    ServiceStubs serviceStubs;
-
-    @Autowired
     BlogService blogService;
 
     @ModelAttribute("blogpost")

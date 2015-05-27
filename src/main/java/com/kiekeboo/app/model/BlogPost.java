@@ -1,6 +1,9 @@
 package com.kiekeboo.app.model;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.kiekeboo.app.services.CustomDateSerializerService;
+
 import java.util.Date;
 
 public class BlogPost {
@@ -35,6 +38,7 @@ public class BlogPost {
         this.contents = contents;
     }
 
+    @JsonSerialize(using = CustomDateSerializerService.class)
     public Date getDate() {
         return date;
     }

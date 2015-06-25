@@ -66,11 +66,13 @@ public class BlogController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/postblogitem", consumes="application/json")
-    public boolean saveBlogPost(Model model, @RequestBody BlogPost blogPost, BindingResult result) {
+    public boolean saveBlogPost(Model model, @RequestBody BlogPost blogPost, BindingResult bindingResult) {
         try {
+//            TODO: add validation, length for title and contents
             blogPost.setDate(new Date());
             blogPost.setWriter("---writer name from session---");
             blogService.saveBlogPost(blogPost);
+
             return true;
         } catch (Exception e) {
             logger.info(String.valueOf(e));

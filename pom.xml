@@ -142,6 +142,13 @@
           <version>2.7</version>
       </dependency>
 
+      <!--Validation-->
+      <dependency>
+          <groupId>javax.validation</groupId>
+          <artifactId>validation-api</artifactId>
+          <version>1.1.0.Final</version>
+      </dependency>
+
 
 
   </dependencies>
@@ -154,7 +161,7 @@
             <artifactId>tomcat7-maven-plugin</artifactId>
             <version>2.2</version>
             <configuration>
-                <url>http://localhost:8080/manager/text</url>
+                <url>http://ubuntuserver:8080/manager/text</url>
                 <server>tomcatserver</server>
                 <update>true</update>
                 <path>/kiekeboo-app-1.0-SNAPSHOT</path>

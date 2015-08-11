@@ -3,17 +3,24 @@ package com.kiekeboo.app.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.kiekeboo.app.services.CustomDateSerializerService;
+import com.kiekeboo.app.validation.BlogPostValidate;
+import com.kiekeboo.app.validation.TitleValidate;
+
 import javax.validation.constraints.Size;
 import java.util.Date;
 
 public class BlogPost {
 
     private int id;
-    @Size(min=1, max=50)
+
+    @TitleValidate
     private String title;
+
     @Size(min=1, max=1500)
     private String contents;
+
     private Date date;
+
     private String writer;
 
 

@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
@@ -66,7 +67,10 @@ public class BlogController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/postblogitem", consumes="application/json")
-    public boolean saveBlogPost(Model model, @RequestBody BlogPost blogPost, BindingResult bindingResult) {
+    public boolean saveBlogPost(Model model,
+                                @RequestBody
+                                @Valid
+                                BlogPost blogPost, BindingResult bindingResult) {
         try {
 //            TODO: add validation, length for title and contents
             blogPost.setDate(new Date());

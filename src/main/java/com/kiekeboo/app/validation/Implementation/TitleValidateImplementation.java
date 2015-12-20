@@ -16,17 +16,17 @@ public class TitleValidateImplementation implements ConstraintValidator<TitleVal
 
 //    @Override
     public void initialize(TitleValidate titleValidate) {
-        logger.info("---------HIT validator1");
+        logger.info("Using TitleValidate.");
 
     }
 
 //    @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
         if (value.length() > LENGTH) {
-            logger.error("Argument passed to TitleValidateImplementation not of type String");
+            logger.error("Argument passed is longer than {} characters", LENGTH);
             return false;
         }
-        logger.info("Validation passed, returning TRUE.....");
+        logger.info("Title Validation passed.");
         return true;
     }
 }

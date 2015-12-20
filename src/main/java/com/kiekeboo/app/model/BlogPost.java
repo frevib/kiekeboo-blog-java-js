@@ -6,6 +6,7 @@ import com.kiekeboo.app.services.CustomDateSerializerService;
 import com.kiekeboo.app.validation.BlogPostValidate;
 import com.kiekeboo.app.validation.TitleValidate;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
 import java.util.Date;
 

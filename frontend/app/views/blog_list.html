@@ -1,0 +1,23 @@
+
+<div class="container">
+    <div class="row" ng-repeat="blogpost in response track by $index">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-preview">
+                <a href="#/showpost/{{ blogpost.id }}">
+                    <h2 class="post-title">
+                        {{ blogpost.title }}
+                    </h2>
+                    <h4 class="post-subtitle">
+                        {{ blogpost.contents | limitTo:limitText }}<b ng-show="blogpost.contents.length > 10">....<div class="read-more">(read more)</div></b>
+                    </h4>
+                </a>
+                <!-- TODO: blogpost.writer, blogpost.date-->
+                <p class="post-meta">Posted by {{blogpost.writer}} on {{blogpost.date}}</p>
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>
+
+
+

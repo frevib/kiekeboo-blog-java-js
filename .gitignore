@@ -1,5 +1,5 @@
 *.class
-target/*
+backend/target/*
 *.sh
 .idea/*
 .DS_Store

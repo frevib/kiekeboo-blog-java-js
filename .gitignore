@@ -1,6 +1,7 @@
 *.class
 backend/target/*
 *.sh
+*.iml
 .idea/*
 .DS_Store
 database.properties

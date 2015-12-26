@@ -29,7 +29,7 @@ public class BlogController {
         this.blogService = blogService;
     }
 
-    // Not working with @Requestbody
+    // TODO: Not working with @Requestbody
     @InitBinder("writer")
     public void initBinder(WebDataBinder binder) {
         binder.setDisallowedFields("writer");
@@ -74,7 +74,7 @@ public class BlogController {
     @RequestMapping(method = RequestMethod.POST, value = "/postblogitem", consumes="application/json")
     public boolean saveBlogPost(Model model, @RequestBody @Valid BlogPost blogPost, BindingResult bindingResult) {
         try {
-//            TODO: add validation, length for title and contents
+// TODO: add validation, length for title and contents
             blogPost.setDate(new Date());
 //            blogPost.setWriter("---writer name from session---");
             String[] suppressedFields = bindingResult.getSuppressedFields();
@@ -82,7 +82,6 @@ public class BlogController {
                 logger.info(element);
 
             }
-
 
             if(bindingResult.hasErrors()) {
                 logger.info(bindingResult.toString());

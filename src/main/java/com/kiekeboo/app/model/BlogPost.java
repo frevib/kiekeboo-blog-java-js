@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.kiekeboo.app.services.CustomDateSerializerService;
 import com.kiekeboo.app.validation.BlogPostValidate;
 import com.kiekeboo.app.validation.TitleValidate;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
@@ -22,6 +24,8 @@ public class BlogPost {
 
     private Date date;
 
+    @Length(max = 30)
+    @Pattern(regexp = "\\w*", message = "not a valid writer")
     private String writer;
 
 

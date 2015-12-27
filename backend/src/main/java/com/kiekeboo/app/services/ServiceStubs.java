@@ -1,6 +1,6 @@
 package com.kiekeboo.app.services;
 
-import com.kiekeboo.app.model.BlogPost;
+import com.kiekeboo.app.model.BlogPostResponseModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +12,8 @@ public class ServiceStubs {
 
     private final Logger logger = LoggerFactory.getLogger(ServiceStubs.class.getName());
 
-    private BlogPost blogPost1 = new BlogPost();
-    private BlogPost blogPost2 = new BlogPost();
+    private BlogPostResponseModel blogPostResponseModel1 = new BlogPostResponseModel();
+    private BlogPostResponseModel blogPostResponseModel2 = new BlogPostResponseModel();
 
     private String inject;
 
@@ -26,27 +26,27 @@ public class ServiceStubs {
 
 
     public ServiceStubs() {
-        blogPost1.setId(1);
-        blogPost1.setTitle("Title ONE..1");
-        blogPost1.setContents("Contents of first article!");
+        blogPostResponseModel1.setId(1);
+        blogPostResponseModel1.setTitle("Title ONE..1");
+        blogPostResponseModel1.setContents("Contents of first article!");
 
-        blogPost2.setId(2);
-        blogPost2.setTitle("Title TWO...2");
-        blogPost2.setContents("COntents of SECOND article");
+        blogPostResponseModel2.setId(2);
+        blogPostResponseModel2.setTitle("Title TWO...2");
+        blogPostResponseModel2.setContents("COntents of SECOND article");
     }
 
-    public BlogPost getBlogPostFromDatabase() {
-        return blogPost1;
+    public BlogPostResponseModel getBlogPostFromDatabase() {
+        return blogPostResponseModel1;
     }
 
-    public List<BlogPost> getLatestBlogPostsFromDatabase() {
-        List<BlogPost> blogPostList = new ArrayList<BlogPost>();
-        blogPostList.add(blogPost1);
-        blogPostList.add(blogPost2);
-        return blogPostList;
+    public List<BlogPostResponseModel> getLatestBlogPostsFromDatabase() {
+        List<BlogPostResponseModel> blogPostResponseModelList = new ArrayList<BlogPostResponseModel>();
+        blogPostResponseModelList.add(blogPostResponseModel1);
+        blogPostResponseModelList.add(blogPostResponseModel2);
+        return blogPostResponseModelList;
     }
 
-    public boolean addBlogPostToDatabase(BlogPost blogPost) {
+    public boolean addBlogPostToDatabase(BlogPostResponseModel blogPostResponseModel) {
         boolean status = false;
 
         return status;

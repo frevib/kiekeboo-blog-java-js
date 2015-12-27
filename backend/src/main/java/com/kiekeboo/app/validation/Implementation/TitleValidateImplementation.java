@@ -12,7 +12,7 @@ public class TitleValidateImplementation implements ConstraintValidator<TitleVal
 
     protected final Logger logger = LoggerFactory.getLogger(TitleValidateImplementation.class);
 
-    private static final int LENGTH = 10;
+    private static final int LENGTH = 20;
 
 //    @Override
     public void initialize(TitleValidate titleValidate) {

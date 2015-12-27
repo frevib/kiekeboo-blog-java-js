@@ -1,11 +1,12 @@
 package com.kiekeboo.app.services;
 
-import com.kiekeboo.app.model.BlogPost;
+import com.kiekeboo.app.model.BlogPostDataModel;
+import com.kiekeboo.app.model.BlogPostRequestModel;
+import com.kiekeboo.app.model.BlogPostResponseModel;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -19,27 +20,27 @@ public class BlogService {
     }
 
     @Transactional
-    public List<BlogPost> getLatestBlogPosts() throws HibernateException {
+    public List<BlogPostDataModel> getLatestBlogPosts() throws HibernateException {
         @SuppressWarnings("unchecked")
-        List<BlogPost> blogPostList = (List<BlogPost>) sessionFactory.getCurrentSession()
-                .createCriteria(BlogPost.class)
+        List<BlogPostDataModel> blogPostResponseModelList = (List<BlogPostDataModel>) sessionFactory.getCurrentSession()
+                .createCriteria(BlogPostDataModel.class)
                 .setMaxResults(10)
                 .addOrder(Order.desc("id"))
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
 
-        return blogPostList;
+        return blogPostResponseModelList;
     }
 
     @Transactional
-    public void saveBlogPost(BlogPost blogPost) throws HibernateException {
-        sessionFactory.getCurrentSession().save(blogPost);
+    public void saveBlogPost(BlogPostDataModel blogPostDataModel) throws HibernateException {
+        sessionFactory.getCurrentSession().save(blogPostDataModel);
     }
 
     @Transactional
-    public BlogPost getBlogPostById(int id) throws HibernateException {
-        BlogPost blogPost = (BlogPost) sessionFactory.getCurrentSession().get(BlogPost.class, id);
-        return blogPost;
+    public BlogPostDataModel getBlogPostById(int id) throws HibernateException {
+        BlogPostDataModel blogPostDataModel = (BlogPostDataModel) sessionFactory.getCurrentSession().get(BlogPostDataModel.class, id);
+        return blogPostDataModel;
     }
 
 

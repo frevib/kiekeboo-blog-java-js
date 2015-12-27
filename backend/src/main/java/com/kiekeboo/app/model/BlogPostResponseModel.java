@@ -1,31 +1,13 @@
 package com.kiekeboo.app.model;
 
-
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.kiekeboo.app.services.CustomDateSerializerService;
-import com.kiekeboo.app.validation.BlogPostValidate;
-import com.kiekeboo.app.validation.TitleValidate;
-import org.hibernate.validator.constraints.Length;
-
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
-public class BlogPost {
+public class BlogPostResponseModel {
 
     private int id;
-
-    @TitleValidate
     private String title;
-
-    @Size(min=1, max=1500)
     private String contents;
-
     private Date date;
-
-    @Length(max = 30)
-    @Pattern(regexp = "\\w*", message = "not a valid writer")
     private String writer;
 
 
@@ -53,7 +35,6 @@ public class BlogPost {
         this.contents = contents;
     }
 
-    @JsonSerialize(using = CustomDateSerializerService.class)
     public Date getDate() {
         return date;
     }
@@ -69,4 +50,6 @@ public class BlogPost {
     public void setWriter(String writer) {
         this.writer = writer;
     }
+
+
 }

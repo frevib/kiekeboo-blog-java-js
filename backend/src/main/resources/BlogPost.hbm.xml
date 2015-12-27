@@ -3,7 +3,7 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.kiekeboo.app.model">
-    <class name="BlogPost" table="BLOGPOST">
+    <class name="com.kiekeboo.app.model.BlogPostDataModel" table="BLOGPOST">
         <id name="id" column="blog_id">
             <generator class="native"/>
         </id>

@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TitleValidate {
 
-    String message() default "w00000t message()";
+    String message() default "...TitleValidate in action...";
 
     Class<?>[] groups() default {};
 

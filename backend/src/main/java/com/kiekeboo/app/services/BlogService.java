@@ -19,10 +19,10 @@ public class BlogService {
         this.sessionFactory = sessionFactory;
     }
 
+//    Get X latest blog posts from database
     @Transactional
-    public List<BlogPostDataModel> getLatestBlogPosts() throws HibernateException {
-        @SuppressWarnings("unchecked")
-        List<BlogPostDataModel> blogPostResponseModelList = (List<BlogPostDataModel>) sessionFactory.getCurrentSession()
+    public List<BlogPostResponseModel> getLatestBlogPosts() throws HibernateException {
+        List<BlogPostResponseModel> blogPostResponseModelList = (List<BlogPostResponseModel>) sessionFactory.getCurrentSession()
                 .createCriteria(BlogPostDataModel.class)
                 .setMaxResults(10)
                 .addOrder(Order.desc("id"))
@@ -32,13 +32,16 @@ public class BlogService {
         return blogPostResponseModelList;
     }
 
+//    Add a blogpost to the database
     @Transactional
     public void saveBlogPost(BlogPostDataModel blogPostDataModel) throws HibernateException {
         sessionFactory.getCurrentSession().save(blogPostDataModel);
     }
 
+//    Get specific blogpost from database by id
     @Transactional
     public BlogPostDataModel getBlogPostById(int id) throws HibernateException {
+//        TODO: cast objects of different types, BlogPostDataModel and BlogPostResponseModel
         BlogPostDataModel blogPostDataModel = (BlogPostDataModel) sessionFactory.getCurrentSession().get(BlogPostDataModel.class, id);
         return blogPostDataModel;
     }

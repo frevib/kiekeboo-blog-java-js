@@ -35,8 +35,9 @@ public class BlogController {
     @RequestMapping(method = RequestMethod.GET, value = "*")
     public BlogPostDataModel getBlogPost(Model model) {
         logger.info("URL: /*");
-        BlogPostDataModel blogPostResponseModel = blogService.getBlogPostById(1);
-        return blogPostResponseModel;
+        BlogPostDataModel blogPostDataModel = blogService.getBlogPostById(1);
+//        Added 'redundant' variable for Clarity, thanks for reminding me Intellij...
+        return blogPostDataModel;
     }
 
     @ResponseBody
@@ -55,22 +56,27 @@ public class BlogController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "/getlatestblogposts")
-    public List<BlogPostDataModel> getLatestBlogPosts(Model model) {
+    public List<BlogPostResponseModel> getLatestBlogPosts(Model model) {
         logger.info("URL: /getlatestblogposts");
-        List<BlogPostDataModel> blogPostDataModelList;
+        List<BlogPostResponseModel> blogPostResponseModelList;
         try {
-            blogPostDataModelList = blogService.getLatestBlogPosts();
+            blogPostResponseModelList = blogService.getLatestBlogPosts();
         } catch (Exception e) {
             e.printStackTrace();
             return null; // return empty
         }
-        return blogPostDataModelList;
+        return blogPostResponseModelList;
     }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/postblogitem", consumes="application/json")
-    public boolean saveBlogPost(Model model, @RequestBody @Valid BlogPostRequestModel blogPostRequestModel, BindingResult bindingResult) {
+    public boolean saveBlogPost(Model model, @RequestBody @Valid BlogPostRequestModel blogPostRequestModel, BindingResult bindingResult) throws Exception {
         try {
+
+            if(bindingResult.hasErrors()) {
+                logger.warn(bindingResult.toString());
+                return false;
+            }
 
             BlogPostDataModel blogPostDataModel = new BlogPostDataModel();
             blogPostDataModel.mapToBlogPostDataModel(blogPostRequestModel);
@@ -79,10 +85,6 @@ public class BlogController {
             for(String element : suppressedFields) {
                 logger.info(element);
 
-            }
-
-            if(bindingResult.hasErrors()) {
-                logger.info(bindingResult.toString());
             }
 
             blogService.saveBlogPost(blogPostDataModel);

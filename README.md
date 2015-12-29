@@ -1,7 +1,7 @@
 # Kiekeboo blog
-# components
-## AngularJS
-## Java with Spring 4 MVC
+# components:
+## -AngularJS
+## -Java with Spring 4 MVC
 
 ### install:
 add database.properties file in

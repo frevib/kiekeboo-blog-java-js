@@ -7,25 +7,35 @@ import org.slf4j.LoggerFactory;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TitleValidateImplementation implements ConstraintValidator<TitleValidate, String> {
 
     protected final Logger logger = LoggerFactory.getLogger(TitleValidateImplementation.class);
 
-    private static final int LENGTH = 20;
-
-//    @Override
     public void initialize(TitleValidate titleValidate) {
         logger.info("Using TitleValidate.");
 
     }
 
-//    @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
-        if (value.length() > LENGTH) {
+        final int LENGTH = 50;
+        final Pattern allowedCharacters = Pattern.compile("[\\w\\s]*");
+        final Matcher matcher = allowedCharacters.matcher(value);
+
+        // Check length
+        if(value.length() > LENGTH) {
             logger.error("Argument passed is longer than {} characters", LENGTH);
             return false;
         }
+
+        // Check against allowed characters (could be done together with LENGTH with regex, but this is just a showcase)
+        if(!matcher.matches()) {
+            logger.error("Title user input does not comply with allowed characters");
+            return false;
+        }
+
         logger.info("Title Validation passed.");
         return true;
     }

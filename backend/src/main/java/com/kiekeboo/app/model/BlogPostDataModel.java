@@ -7,9 +7,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
 
-/**
- * Created by hdv on 27/12/15.
- */
+
 public class BlogPostDataModel {
 
     private int id;
@@ -18,7 +16,7 @@ public class BlogPostDataModel {
     private Date date;
 
     @Length(min = 1, max = 30)
-    @Pattern(regexp = "\\w*", message = "not a valid writer")
+    @Pattern(regexp = "[\\w\\s]*", message = "not a valid writer")
     private String writer;
 
 
@@ -67,7 +65,8 @@ public class BlogPostDataModel {
         this.setTitle(blogPostRequestModel.getTitle());
         this.setContents(blogPostRequestModel.getContents());
         this.setDate(new Date());
-        this.setWriter("ElEscribador");
+        // TODO: Fetch writer from session
+        this.setWriter("El Escribador");
         return this;
     }
 

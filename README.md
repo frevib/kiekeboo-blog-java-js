@@ -1,12 +1,15 @@
-# Kiekeboo blog
-# components:
-## -AngularJS
-## -Java with Spring 4 MVC
+# Kiekeboo blog software written in:
+### -AngularJS
+### -Java with Spring 4 MVC
 
 ### install:
-add database.properties file in
-backend/src/main/resources/
+1. use the sql file in backend/database to create the MySQL table layout
+2. add the database username and password in the following file:
 
-with contents:
+backend/src/main/resources/database.properties
+<pre>
+<code>
 database.username=username
 database.password=password
+</code>
+</pre>

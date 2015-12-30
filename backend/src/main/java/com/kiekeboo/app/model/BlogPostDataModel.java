@@ -7,8 +7,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
 
-
-public class BlogPostDataModel {
+public class BlogPostDataModel extends BlogPostModel{
 
     private int id;
     private String title;
@@ -28,22 +27,6 @@ public class BlogPostDataModel {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public void setContents(String contents) {
-        this.contents = contents;
-    }
-
     @JsonSerialize(using = CustomDateSerializerService.class)
     public Date getDate() {
         return date;
@@ -61,7 +44,7 @@ public class BlogPostDataModel {
         this.writer = writer;
     }
 
-    public BlogPostDataModel mapToBlogPostDataModel(BlogPostRequestModel blogPostRequestModel) {
+    public BlogPostDataModel mapRequestToDataModel(BlogPostRequestModel blogPostRequestModel) {
         this.setTitle(blogPostRequestModel.getTitle());
         this.setContents(blogPostRequestModel.getContents());
         this.setDate(new Date());

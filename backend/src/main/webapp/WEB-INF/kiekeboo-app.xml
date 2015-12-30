@@ -20,12 +20,27 @@
 
        <context:property-placeholder location="classpath:database.properties" />
 
+    <!--For blog service-->
        <bean id="blogService" class="com.kiekeboo.app.services.BlogService">
               <constructor-arg>
                      <ref bean="sessionFactory" />
               </constructor-arg>
        </bean>
 
+    <!--For authentication-->
+       <bean id="authenticationService" class="com.kiekeboo.app.services.AuthenticationService">
+              <constructor-arg>
+                     <ref bean="sessionFactory" />
+              </constructor-arg>
+       </bean>
+
+        <bean id="authenticateUser" class="com.kiekeboo.app.services.AuthenticateUser">
+            <constructor-arg>
+                    <ref bean="authenticationService"/>
+            </constructor-arg>
+        </bean>
+
+    <!--For Hibernate-->
        <tx:annotation-driven/>
        <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
               <property name="sessionFactory" ref="sessionFactory" />

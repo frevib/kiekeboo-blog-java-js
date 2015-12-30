@@ -16,7 +16,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -69,7 +68,7 @@ public class BlogController {
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST, value = "/postblogitem", consumes="application/json")
+    @RequestMapping(method = RequestMethod.POST, value = "/postblogitem", consumes = "application/json")
     public boolean saveBlogPost(Model model, @RequestBody @Valid BlogPostRequestModel blogPostRequestModel, BindingResult bindingResult) throws Exception {
         try {
 
@@ -79,7 +78,7 @@ public class BlogController {
             }
 
             BlogPostDataModel blogPostDataModel = new BlogPostDataModel();
-            blogPostDataModel.mapToBlogPostDataModel(blogPostRequestModel);
+            blogPostDataModel.mapRequestToDataModel(blogPostRequestModel);
 
             String[] suppressedFields = bindingResult.getSuppressedFields();
             for(String element : suppressedFields) {

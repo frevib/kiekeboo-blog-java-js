@@ -3,8 +3,9 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.kiekeboo.app.model">
-    <class name="com.kiekeboo.app.model.BlogPostDataModel" table="BLOGPOST">
-        <id name="id" column="blog_id">
+
+    <class name="BlogPostDataModel" table="BLOGPOST">
+        <id name="blogpostId" column="blog_id">
             <generator class="native"/>
         </id>
         <property name="title" column="title" />
@@ -12,4 +13,14 @@
         <property name="date" column="datetime"/>
         <property name="writer" column="writer"/>
     </class>
+
+    <class name="UserDataModel" table="USERS">
+        <id name="userId" column="user_id">
+            <generator class="native"/>
+        </id>
+        <property name="username" column="username"/>
+        <property name="password" column="password"/>
+    </class>
+
 </hibernate-mapping>
+

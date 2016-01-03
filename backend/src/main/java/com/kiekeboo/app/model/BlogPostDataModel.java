@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class BlogPostDataModel extends BlogPostModel{
 
-    private int id;
+    private int blogpostId;
     private String title;
     private String contents;
     private Date date;
@@ -19,12 +19,12 @@ public class BlogPostDataModel extends BlogPostModel{
     private String writer;
 
 
-    public int getId() {
-        return id;
+    public int getBlogpostId() {
+        return blogpostId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setBlogpostId(int id) {
+        this.blogpostId = id;
     }
 
     @JsonSerialize(using = CustomDateSerializerService.class)

@@ -4,7 +4,24 @@ import java.util.Date;
 
 public class UserDataModel extends UserModel {
 
+    private int userId;
     private Date loginDate;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getId() {
+        return userId;
+    }
+
+    public void setId(int userId) {
+        this.userId = userId;
+    }
 
     public Date getLoginDate() {
         return loginDate;

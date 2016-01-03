@@ -1,7 +1,6 @@
 package com.kiekeboo.app.services;
 
 import com.kiekeboo.app.model.BlogPostDataModel;
-import com.kiekeboo.app.model.BlogPostRequestModel;
 import com.kiekeboo.app.model.BlogPostResponseModel;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -25,7 +24,7 @@ public class BlogService {
         List<BlogPostResponseModel> blogPostResponseModelList = (List<BlogPostResponseModel>) sessionFactory.getCurrentSession()
                 .createCriteria(BlogPostDataModel.class)
                 .setMaxResults(10)
-                .addOrder(Order.desc("id"))
+                .addOrder(Order.desc("blogpostId"))
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
 
@@ -40,9 +39,9 @@ public class BlogService {
 
 //    Get specific blogpost from database by id
     @Transactional
-    public BlogPostDataModel getBlogPostById(int id) throws HibernateException {
+    public BlogPostDataModel getBlogPostById(int geit) throws HibernateException {
 //        TODO: cast objects of different types, BlogPostDataModel and BlogPostResponseModel
-        BlogPostDataModel blogPostDataModel = (BlogPostDataModel) sessionFactory.getCurrentSession().get(BlogPostDataModel.class, id);
+        BlogPostDataModel blogPostDataModel = (BlogPostDataModel) sessionFactory.getCurrentSession().get(BlogPostDataModel.class, geit);
         return blogPostDataModel;
     }
 

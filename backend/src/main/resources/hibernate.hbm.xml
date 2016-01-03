@@ -20,6 +20,7 @@
         </id>
         <property name="username" column="username"/>
         <property name="password" column="password"/>
+        <property name="salt" column="password_salt"/>
     </class>
 
 </hibernate-mapping>

@@ -2,7 +2,7 @@
 ### -AngularJS
 ### -Java with Spring 4 MVC
 
-### install:
+### install (buggy):
 1. use the sql file in backend/database to create the MySQL table layout
 2. add the database username and password in the following file:
 
@@ -13,3 +13,5 @@ database.username=username
 database.password=password
 </code>
 </pre>
+
+3. mvn clean install

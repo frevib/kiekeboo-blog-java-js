@@ -21,20 +21,20 @@
        <context:property-placeholder location="classpath:database.properties" />
 
     <!--For blog service-->
-       <bean id="blogService" class="com.kiekeboo.app.services.BlogService">
+       <bean id="blogService" class="com.kiekeboo.app.dao.BlogDAO">
               <constructor-arg>
                      <ref bean="sessionFactory" />
               </constructor-arg>
        </bean>
 
     <!--For authentication-->
-       <bean id="authenticationService" class="com.kiekeboo.app.services.AuthenticationService">
+       <bean id="authenticationService" class="com.kiekeboo.app.dao.AuthenticationDAO">
               <constructor-arg>
                      <ref bean="sessionFactory" />
               </constructor-arg>
        </bean>
 
-        <bean id="authenticateUser" class="com.kiekeboo.app.services.AuthenticateUser">
+        <bean id="authenticateUser" class="com.kiekeboo.app.services.AuthenticateUserService">
             <constructor-arg>
                     <ref bean="authenticationService"/>
             </constructor-arg>

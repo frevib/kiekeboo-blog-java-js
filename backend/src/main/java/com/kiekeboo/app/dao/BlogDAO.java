@@ -1,4 +1,4 @@
-package com.kiekeboo.app.services;
+package com.kiekeboo.app.dao;
 
 import com.kiekeboo.app.model.BlogPostDataModel;
 import com.kiekeboo.app.model.BlogPostResponseModel;
@@ -10,11 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public class BlogService {
+public class BlogDAO {
 
     private SessionFactory sessionFactory;
 
-    public BlogService(SessionFactory sessionFactory) {
+    public BlogDAO(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 

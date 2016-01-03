@@ -6,6 +6,7 @@ public class UserDataModel extends UserModel {
 
     private int userId;
     private Date loginDate;
+    private String salt;
 
     public int getUserId() {
         return userId;
@@ -29,6 +30,14 @@ public class UserDataModel extends UserModel {
 
     public void setLoginDate(Date loginDate) {
         this.loginDate = loginDate;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public UserDataModel mapRequestToDataModel(UserRequestModel userRequestModel) {

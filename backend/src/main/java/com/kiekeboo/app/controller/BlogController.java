@@ -3,7 +3,7 @@ package com.kiekeboo.app.controller;
 import com.kiekeboo.app.model.BlogPostDataModel;
 import com.kiekeboo.app.model.BlogPostRequestModel;
 import com.kiekeboo.app.model.BlogPostResponseModel;
-import com.kiekeboo.app.services.BlogService;
+import com.kiekeboo.app.dao.BlogDAO;
 
 import org.hibernate.validator.constraints.Length;
 import org.slf4j.LoggerFactory;
@@ -22,19 +22,19 @@ import java.util.List;
 @RequestMapping("/blog")
 public class BlogController {
 
-    private BlogService blogService;
+    private BlogDAO blogDAO;
     private final Logger logger = LoggerFactory.getLogger(BlogController.class);
 
     @Autowired
-    public BlogController(BlogService blogService) {
-        this.blogService = blogService;
+    public BlogController(BlogDAO blogDAO) {
+        this.blogDAO = blogDAO;
     }
 
 
     @RequestMapping(method = RequestMethod.GET, value = "*")
     public BlogPostDataModel getBlogPost(Model model) {
         logger.info("URL: /*");
-        BlogPostDataModel blogPostDataModel = blogService.getBlogPostById(1);
+        BlogPostDataModel blogPostDataModel = blogDAO.getBlogPostById(1);
 //        Added 'redundant' variable for Clarity, thanks for reminding me Intellij...
         return blogPostDataModel;
     }
@@ -45,7 +45,7 @@ public class BlogController {
         logger.info("URL: /getblogpost/{}", id);
         BlogPostDataModel blogPostDataModel;
         try {
-            blogPostDataModel = blogService.getBlogPostById(id);
+            blogPostDataModel = blogDAO.getBlogPostById(id);
         } catch (Exception e) {
             e.printStackTrace();
             return null; // return empty
@@ -59,7 +59,7 @@ public class BlogController {
         logger.info("URL: /getlatestblogposts");
         List<BlogPostResponseModel> blogPostResponseModelList;
         try {
-            blogPostResponseModelList = blogService.getLatestBlogPosts();
+            blogPostResponseModelList = blogDAO.getLatestBlogPosts();
         } catch (Exception e) {
             e.printStackTrace();
             return null; // return empty
@@ -86,7 +86,7 @@ public class BlogController {
 
             }
 
-            blogService.saveBlogPost(blogPostDataModel);
+            blogDAO.saveBlogPost(blogPostDataModel);
 //            TODO: change this to something better that true/false
             return true;
 

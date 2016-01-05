@@ -30,7 +30,6 @@ import java.util.Set;
 @RequestMapping("/blog")
 public class BlogController {
 
-    private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
     private BlogDAO blogDAO;
     private final Logger logger = LoggerFactory.getLogger(BlogController.class);
 
@@ -90,12 +89,6 @@ public class BlogController {
     @RequestMapping(method = RequestMethod.POST, value = "/postblogitem", consumes = "application/json")
     public ResponseEntity<String> saveBlogPost(@RequestBody @Valid BlogPostRequestModel blogPostRequestModel, BindingResult bindingResult) throws Exception {
         logger.info("HIT: /postblogitem");
-//        Validate request
-        final Set<ConstraintViolation<BlogPostRequestModel>> constraintViolations = validator.validate(blogPostRequestModel);
-        if (!constraintViolations.isEmpty()) {
-            logger.warn("Validation error");
-            return new ResponseEntity<>("Item NOT added", HttpStatus.BAD_REQUEST);
-        }
 //        Check if model binding (JSON -> BlogPostRequestModel) went OK
         if (bindingResult.hasErrors()) {
             logger.warn(bindingResult.toString());

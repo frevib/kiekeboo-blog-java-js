@@ -7,6 +7,16 @@ public class UserDataModel extends UserModel {
     private int userId;
     private Date loginDate;
     private String salt;
+    private int role_id;
+    private String encryptionKeyJWT;
+
+    public int getRole_id() {
+        return role_id;
+    }
+
+    public void setRole_id(int role_id) {
+        this.role_id = role_id;
+    }
 
     public int getUserId() {
         return userId;
@@ -40,11 +50,18 @@ public class UserDataModel extends UserModel {
         this.salt = salt;
     }
 
+    public String getEncryptionKeyJWT() {
+        return encryptionKeyJWT;
+    }
+
+    public void setEncryptionKeyJWT(String encryptionKeyJWT) {
+        this.encryptionKeyJWT = encryptionKeyJWT;
+    }
+
     public UserDataModel mapRequestToDataModel(UserRequestModel userRequestModel) {
         this.setUsername(userRequestModel.getUsername());
         this.setPassword(userRequestModel.getPassword());
         setLoginDate(new Date());
         return this;
     }
-
 }

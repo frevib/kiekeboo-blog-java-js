@@ -27,7 +27,6 @@ public class BlogDAO {
                 .addOrder(Order.desc("blogpostId"))
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
-
         return blogPostResponseModelList;
     }
 

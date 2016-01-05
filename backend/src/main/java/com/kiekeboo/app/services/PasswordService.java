@@ -13,7 +13,8 @@ public class PasswordService {
 
 //    Bcrypt is better! But for this simple blog hash+salt will suffice.
 //    Take the hashed password from the database and the unhashed password from user. Check if hash(passwordFromPost + salt) == passwordFromDatabase
-    public static boolean checkHashedPassword(PasswordAndSaltModel passwordAndSaltFromDatabase, String unhashedPasswordFromPost) {
+    public static boolean checkPassword(PasswordAndSaltModel passwordAndSaltFromDatabase, String unhashedPasswordFromPost) {
+        logger.info("Checking password");
         String passwordAndSaltString = unhashedPasswordFromPost + passwordAndSaltFromDatabase.getSalt();
         MessageDigest md = null;
         try {

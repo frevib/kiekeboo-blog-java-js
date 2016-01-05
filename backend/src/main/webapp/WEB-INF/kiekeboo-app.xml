@@ -8,54 +8,65 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-       <!-- Commented out because not needed for service -->
-       <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-              <!--<property name="prefix">-->
-                     <!--<value>/WEB-INF/pages/</value>-->
-              <!--</property>-->
-              <!--<property name="suffix">-->
-                     <!--<value>.jsp</value>-->
-              <!--</property>-->
-       <!--</bean>-->
+    <!-- Commented out because not needed for service -->
+    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+    <!--<property name="prefix">-->
+    <!--<value>/WEB-INF/pages/</value>-->
+    <!--</property>-->
+    <!--<property name="suffix">-->
+    <!--<value>.jsp</value>-->
+    <!--</property>-->
+    <!--</bean>-->
 
-       <context:property-placeholder location="classpath:database.properties" />
+    <context:property-placeholder location="classpath:database.properties" />
 
     <!--For blog service-->
-       <bean id="blogService" class="com.kiekeboo.app.dao.BlogDAO">
-              <constructor-arg>
-                     <ref bean="sessionFactory" />
-              </constructor-arg>
-       </bean>
+    <bean id="blogDao" class="com.kiekeboo.app.dao.BlogDAO">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+
+    <!--For UserTokenService-->
+    <bean id="userTokenService" class="com.kiekeboo.app.services.UserTokenService">
+        <constructor-arg>
+            <ref bean="authenticationDao"/>
+        </constructor-arg>
+    </bean>
+
 
     <!--For authentication-->
-       <bean id="authenticationService" class="com.kiekeboo.app.dao.AuthenticationDAO">
-              <constructor-arg>
-                     <ref bean="sessionFactory" />
-              </constructor-arg>
-       </bean>
+    <bean id="authenticationDao" class="com.kiekeboo.app.dao.AuthenticationDAO">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
 
-        <bean id="authenticateUser" class="com.kiekeboo.app.services.AuthenticateUserService">
-            <constructor-arg>
-                    <ref bean="authenticationService"/>
-            </constructor-arg>
-        </bean>
+    <bean id="authenticationService" class="com.kiekeboo.app.services.AuthenticationService">
+        <constructor-arg>
+            <ref bean="authenticationDao"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="userTokenService"/>
+        </constructor-arg>
+    </bean>
 
     <!--For Hibernate-->
-       <tx:annotation-driven/>
-       <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-              <property name="sessionFactory" ref="sessionFactory" />
-       </bean>
+    <tx:annotation-driven/>
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
 
-       <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-              <property name="dataSource" ref="dataSource" />
-              <property name="configLocation" value="classpath:hibernate.cfg.xml" />
-       </bean>
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+    </bean>
 
-       <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-              <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-              <property name="url" value="jdbc:mysql://ubuntuserver:3306/kiekeboo?zeroDateTimeBehavior=convertToNull"/>
-              <property name="username" value="${database.username}"/>
-              <property name="password" value="${database.password}"/>
-       </bean>
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="${database.url}"/>
+        <property name="username" value="${database.username}"/>
+        <property name="password" value="${database.password}"/>
+    </bean>
 
 </beans>

@@ -110,6 +110,13 @@
         <version>2.5.0</version>
     </dependency>
 
+      <!--JSON web token-->
+      <dependency>
+          <groupId>io.jsonwebtoken</groupId>
+          <artifactId>jjwt</artifactId>
+          <version>0.6.0</version>
+      </dependency>
+
       <!-- Logging-->
       <!--<dependency>-->
           <!--<groupId>org.slf4j</groupId>-->
@@ -182,6 +189,14 @@
                 <path>/kiekeboo-app-1.0-SNAPSHOT</path>
             </configuration>
         </plugin>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <configuration>
+                  <source>1.7</source>
+                  <target>1.7</target>
+              </configuration>
+          </plugin>
       </plugins>
   </build>
 </project>

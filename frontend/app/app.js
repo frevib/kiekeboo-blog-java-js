@@ -6,7 +6,7 @@ kiekebooApp.config(['$routeProvider', '$httpProvider', function($routeProvider, 
             templateUrl: 'app/views/blog_list.html',
             controller: 'bloglistController'
         })
-        .when('/showpost/:id', {
+        .when('/showpost/:blogpostId', {
             templateUrl: 'app/views/show_post.html',
             controller: 'showpostController'
         })
@@ -40,7 +40,7 @@ kiekebooApp.controller('addPostController', function($scope, $http) {
         var data = {
                 title: $scope.title,
                 contents: $scope.contents
-            }
+            };
         $http.post('http://ubuntuserver:8080/kiekeboo-app-1.0-SNAPSHOT/blog/postblogitem', data)
             .success(function(data, status) {
                 $scope.response = data;
@@ -54,7 +54,7 @@ kiekebooApp.controller('addPostController', function($scope, $http) {
 });
 
 kiekebooApp.controller('showpostController', function($scope, $http, $routeParams) {
-    var url = 'http://ubuntuserver:8080/kiekeboo-app-1.0-SNAPSHOT/blog/getblogpost/' + $routeParams.id;
+    var url = 'http://ubuntuserver:8080/kiekeboo-app-1.0-SNAPSHOT/blog/getblogpost/' + $routeParams.blogpostId;
     $http.get(url)
         .success(function(data, status, headers, config) {
             $scope.response = data;

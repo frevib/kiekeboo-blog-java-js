@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthenticationDAO {
 
     private SessionFactory sessionFactory;
-
     private final Logger logger = LoggerFactory.getLogger(AuthenticationDAO.class);
 
     @Autowired
@@ -25,16 +24,30 @@ public class AuthenticationDAO {
         this.sessionFactory = sessionFactory;
     }
 
-//    Temp always true for testing
-
-
     @Transactional
-    public List<UserDataModel> getUserFromDatabase(String username) throws HibernateException {
+    public UserDataModel getUserFromDatabase(String username) throws HibernateException {
         String hql = "FROM UserDataModel U WHERE U.username = :username";
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
         query.setParameter("username", username);
         List<UserDataModel> userData = (List<UserDataModel>) query.list();
-        return userData;
+        if(userData.size() != 1) {
+            if(userData.size() < 1) {
+                logger.warn("No user found (empty resultset)");
+            } else {
+                logger.error("--CRITICAL ERROR!-- More than one user in resultset (!)");
+            }
+            throw new HibernateException("Error fetching user from database");
+        }
+        return userData.get(0);
     }
+
+//    TODO: write this
+//    Temp always true for testing
+    @Transactional
+    public boolean addKeytoDatabase(String username) throws HibernateException {
+        String hql = "";
+        return true;
+    }
+
 
 }

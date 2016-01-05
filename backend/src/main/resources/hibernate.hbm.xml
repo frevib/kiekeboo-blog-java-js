@@ -5,22 +5,24 @@
 <hibernate-mapping package="com.kiekeboo.app.model">
 
     <class name="BlogPostDataModel" table="BLOGPOST">
-        <id name="blogpostId" column="blog_id">
+        <id name="blogpostId" column="blog_id" type="integer">
             <generator class="native"/>
         </id>
-        <property name="title" column="title" />
-        <property name="contents" column="contents" />
-        <property name="date" column="datetime"/>
-        <property name="writer" column="writer"/>
+        <property name="title" column="title" type="string"/>
+        <property name="contents" column="contents" type="string"/>
+        <property name="date" column="datetime" type="date"/>
+        <property name="writer" column="writer" type="string"/>
     </class>
 
     <class name="UserDataModel" table="USERS">
-        <id name="userId" column="user_id">
+        <id name="userId" column="user_id" type="integer">
             <generator class="native"/>
         </id>
-        <property name="username" column="username"/>
-        <property name="password" column="password"/>
-        <property name="salt" column="password_salt"/>
+        <property name="username" column="username" type="string"/>
+        <property name="password" column="password" type="string"/>
+        <property name="role_id" column="role_id" type="integer"/>
+        <property name="salt" column="password_salt" type="string"/>
+        <!--<property name="encryptionKeyJWT" column="encryptionkeyjwt"/>-->
     </class>
 
 </hibernate-mapping>

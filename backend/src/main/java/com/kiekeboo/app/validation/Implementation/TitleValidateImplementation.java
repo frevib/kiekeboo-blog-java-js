@@ -16,23 +16,22 @@ public class TitleValidateImplementation implements ConstraintValidator<TitleVal
 
     public void initialize(TitleValidate titleValidate) {
         logger.info("Using TitleValidate.");
-
     }
 
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
-        final int LENGTH = 50;
+        final int MAX_LENGTH = 50;
         final Pattern allowedCharacters = Pattern.compile("[\\w\\s]*");
         final Matcher matcher = allowedCharacters.matcher(value);
 
         // Check length
-        if(value.length() > LENGTH) {
-            logger.error("Argument passed is longer than {} characters", LENGTH);
+        if(value.length() > MAX_LENGTH) {
+            logger.warn("Argument passed is longer than {} characters", MAX_LENGTH);
             return false;
         }
 
         // Check against allowed characters (could be done together with LENGTH with regex, but this is just a showcase)
         if(!matcher.matches()) {
-            logger.error("Title user input does not comply with allowed characters");
+            logger.warn("Title user input does not comply with allowed characters");
             return false;
         }
 

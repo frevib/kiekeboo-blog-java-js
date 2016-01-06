@@ -25,19 +25,19 @@ public class AuthenticationService {
     public String authenticate(UserDataModel userDataFromPost) throws Exception {
         logger.info("LOGIN: user {} tries to login", userDataFromPost.getUsername());
 //        TODO: could be nicer written logic
-        UserDataModel user = null;
+//        TODO: CRITICAL fix throws!
+        UserDataModel user;
         try {
             user = authenticationDAO.getUserFromDatabase(userDataFromPost.getUsername());
             logger.info("Fetched user object from database");
         } catch (Exception e) {
             logger.warn("Could not fetch password and salt from database");
-            return null;
+            throw new Exception("Could not fetch password and salt from database");
         }
         PasswordAndSaltModel passwordAndSaltFromDatabase = getPasswordAndSalt(user);
         String unhashedPasswordFromPost = userDataFromPost.getPassword();
         if(passwordAndSaltFromDatabase == null) {
-            logger.warn("Password and salt fetched from database are null");
-            return null;
+            throw new Exception("Password and salt fetched from database are null");
         }
         if (PasswordService.checkPassword(passwordAndSaltFromDatabase, unhashedPasswordFromPost)) {
 //            TODO: generate token (JWT?)

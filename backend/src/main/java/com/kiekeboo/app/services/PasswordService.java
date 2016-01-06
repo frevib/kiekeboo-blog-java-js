@@ -9,6 +9,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class PasswordService {
 
+//    Don't use static methods??
     private final static Logger logger = LoggerFactory.getLogger(PasswordService.class);
 
 //    Bcrypt is better! But for this simple blog hash+salt will suffice.

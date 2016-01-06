@@ -28,7 +28,6 @@ import java.util.Set;
 @RequestMapping("/admin")
 public class AuthenticationController {
 
-    private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
     private AuthenticationService authenticationService;
     private final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 
@@ -41,12 +40,6 @@ public class AuthenticationController {
     @RequestMapping(method = RequestMethod.POST, value = "/login", consumes = "application/json", produces = "application/json")
     public ResponseEntity<JsonWebToken> authenticateUser(@RequestBody @Valid UserRequestModel userRequestModel, BindingResult bindingResult) {
         logger.info("HIT: /login");
-//        Validate request
-        Set<ConstraintViolation<UserRequestModel>> constraintViolations = validator.validate(userRequestModel);
-        if (!constraintViolations.isEmpty()) {
-            logger.warn("Validation error");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
 //        Check if model binding (JSON -> BlogPostRequestModel) went OK
         if (bindingResult.hasErrors()) {
             logger.warn("invalid request");
@@ -54,7 +47,7 @@ public class AuthenticationController {
         }
         UserDataModel userDataModel = new UserDataModel();
         userDataModel = userDataModel.mapRequestToDataModel(userRequestModel);
-//        check password sent in JSON {"username":"xxxx", "password":"yyy"}
+//        Check password sent in JSON {"username":"xxxx", "password":"yyyy"}
         String userAuthenticatedToken;
         try {
             userAuthenticatedToken = authenticationService.authenticate(userDataModel);

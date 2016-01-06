@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TitleValidate {
 
-    String message() default "...TitleValidate in action...";
+    String message() default "Title contains invalid characters";
 
     Class<?>[] groups() default {};
 

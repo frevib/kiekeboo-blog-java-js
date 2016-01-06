@@ -45,7 +45,7 @@ public class UserTokenService {
             logger.warn("Could not add JWT HMAC key to database");
             return null;
         }
-//        TODO: encrypt jwt with AES GCM and the Key
+//        TODO: encrypt jwt with AES-GCM and the Key
         return jwt;
     }
 

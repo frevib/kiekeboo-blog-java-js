@@ -57,7 +57,7 @@ public class BlogController {
     public ResponseEntity<BlogPostDataModel> getBlogPostById(@Max(9999) @PathVariable int id) {
         logger.info("HIT: /getblogpost/{}", id);
 //        Valition for @PathVariable not supported, so created this QnD fix.. better use JAX-RS
-        if(id > 9999) {
+        if(id < 1 && id > 9999) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         BlogPostDataModel blogPostDataModel;

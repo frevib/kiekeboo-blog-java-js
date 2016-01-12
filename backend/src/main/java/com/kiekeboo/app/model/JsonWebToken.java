@@ -2,17 +2,17 @@ package com.kiekeboo.app.model;
 
 public class JsonWebToken {
 
-    private String name = "jwt";
-    private String tokenValue;
+    private static String name = "jwt";
+    private String value;
 
     public String getName() {
         return name;
     }
-    public String getTokenValue() {
-        return tokenValue;
+    public String getValue() {
+        return value;
     }
 
-    public void setTokenValue(String tokenValue) {
-        this.tokenValue = tokenValue;
+    public void setValue(String value) {
+        this.value = value;
     }
 }

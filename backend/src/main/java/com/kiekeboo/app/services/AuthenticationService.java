@@ -11,14 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class AuthenticationService {
 
     private AuthenticationDAO authenticationDAO;
-    private UserTokenService userTokenService;
+    private JWTTokenService JWTTokenService;
     private final Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
 
     @Autowired
     public AuthenticationService(final AuthenticationDAO authenticationDAO,
-                                 final UserTokenService userTokenService) {
+                                 final JWTTokenService JWTTokenService) {
         this.authenticationDAO = authenticationDAO;
-        this.userTokenService = userTokenService;
+        this.JWTTokenService = JWTTokenService;
     }
 
 //    authenticate user based on username and password, return some kind of token (JWS?)
@@ -41,7 +41,7 @@ public class AuthenticationService {
         }
         if (PasswordService.checkPassword(passwordAndSaltFromDatabase, unhashedPasswordFromPost)) {
 //            TODO: generate token (JWT?)
-            String token = userTokenService.getNewToken(user);
+            String token = JWTTokenService.getNewToken(user);
             if(token == null){
                 throw new Exception("No token generated");
             }
@@ -57,6 +57,4 @@ public class AuthenticationService {
         passwordAndSaltModel.setSalt(user.getSalt());
         return passwordAndSaltModel;
     }
-
-
 }

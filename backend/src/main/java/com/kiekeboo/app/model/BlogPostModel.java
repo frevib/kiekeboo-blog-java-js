@@ -8,7 +8,7 @@ public abstract class BlogPostModel {
     @TitleValidate
     private String title;
 
-    @Size(min=1, max=1500)
+    @Size(min=1, max=1500, message = "Too many characters")
     private String contents;
 
 

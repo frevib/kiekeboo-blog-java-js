@@ -18,7 +18,6 @@ public class CORSFilter implements Filter {
 //        Preflight CORS
         response.setHeader("Access-Control-Allow-Methods", "GET, POST");
         response.setHeader("Access-Control-Allow-Headers", "accept, access-control-allow-headers, content-type");
-
         response.setHeader("Access-Control-Allow-Credentials", "true");
         chain.doFilter(req, res);
     }

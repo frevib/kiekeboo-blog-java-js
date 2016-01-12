@@ -27,8 +27,8 @@
         </constructor-arg>
     </bean>
 
-    <!--For UserTokenService-->
-    <bean id="userTokenService" class="com.kiekeboo.app.services.UserTokenService">
+    <!--For JWTTokenService-->
+    <bean id="jwtTokenService" class="com.kiekeboo.app.services.JWTTokenService">
         <constructor-arg>
             <ref bean="authenticationDao"/>
         </constructor-arg>
@@ -47,7 +47,7 @@
             <ref bean="authenticationDao"/>
         </constructor-arg>
         <constructor-arg>
-            <ref bean="userTokenService"/>
+            <ref bean="jwtTokenService"/>
         </constructor-arg>
     </bean>
 
@@ -67,6 +67,11 @@
         <property name="url" value="${database.url}"/>
         <property name="username" value="${database.username}"/>
         <property name="password" value="${database.password}"/>
+    </bean>
+
+    <!--For AuthorizationFilter-->
+    <bean id="authorizationFilter" class="com.kiekeboo.app.filter.AuthorizationFilter">
+        <constructor-arg ref="jwtTokenService"/>
     </bean>
 
 </beans>

@@ -54,7 +54,7 @@ public class BlogController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "/getblogpost/{id}")
-    public ResponseEntity<BlogPostDataModel> getBlogPostById(@Max(9999) @PathVariable int id) {
+    public ResponseEntity<BlogPostDataModel> getBlogPostById(@PathVariable int id) {
         logger.info("HIT: /getblogpost/{}", id);
 //        Valition for @PathVariable not supported, so created this QnD fix.. better use JAX-RS
         if(id < 1 && id > 9999) {
@@ -85,29 +85,6 @@ public class BlogController {
         return new ResponseEntity<>(blogPostResponseModelList, HttpStatus.OK);
     }
 
-    @ResponseBody
-    @RequestMapping(method = RequestMethod.POST, value = "/postblogitem", consumes = "application/json")
-    public ResponseEntity<String> saveBlogPost(@RequestBody @Valid BlogPostRequestModel blogPostRequestModel, BindingResult bindingResult) throws Exception {
-        logger.info("HIT: /postblogitem");
-//        Check if model binding (JSON -> BlogPostRequestModel) went OK
-        if (bindingResult.hasErrors()) {
-            logger.warn(bindingResult.toString());
-            return new ResponseEntity<>("Item NOT added", HttpStatus.BAD_REQUEST);
-        }
-//        Map BlogPostRequestModel to BlogPostDataModel
-        BlogPostDataModel blogPostDataModel = new BlogPostDataModel();
-        blogPostDataModel.mapRequestToDataModel(blogPostRequestModel);
-//        Put blog post into the database
-        try {
-            blogDAO.saveBlogPost(blogPostDataModel);
-            logger.info("Blog post successfully saved in database!");
-            return new ResponseEntity<>("Item added", HttpStatus.OK);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>("Item NOT added", HttpStatus.BAD_REQUEST);
-        }
-    }
 
 //    TODO: search controller
 }

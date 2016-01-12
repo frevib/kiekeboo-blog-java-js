@@ -10,22 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import java.util.Set;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/login")
 public class AuthenticationController {
 
     private AuthenticationService authenticationService;
@@ -60,7 +54,7 @@ public class AuthenticationController {
             logger.info("Request OK, fetching TOKEN");
 //              TODO: Return token as Authorization Bearer header
             JsonWebToken jwt = new JsonWebToken();
-            jwt.setTokenValue(userAuthenticatedToken);
+            jwt.setValue(userAuthenticatedToken);
             return new ResponseEntity<>(jwt, HttpStatus.OK);
         }
         logger.info("Login failed, no token served");

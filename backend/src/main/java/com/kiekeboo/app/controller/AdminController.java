@@ -3,6 +3,7 @@ package com.kiekeboo.app.controller;
 import com.kiekeboo.app.dao.BlogDAO;
 import com.kiekeboo.app.model.BlogPostDataModel;
 import com.kiekeboo.app.model.BlogPostRequestModel;
+import com.kiekeboo.app.model.BlogPostResponseModel;
 import com.kiekeboo.app.services.AuthenticationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,8 +38,8 @@ public class AdminController {
         logger.info("HIT: /postblogitem");
 //        Check if model binding (JSON -> BlogPostRequestModel) went OK
         if (bindingResult.hasErrors()) {
-            logger.warn(bindingResult.toString());
-            return new ResponseEntity<>("Item NOT added", HttpStatus.BAD_REQUEST);
+            logger.warn("Error in bindingresult: {}", bindingResult.toString());
+            return new ResponseEntity<>("Item NOT added, invalid user input", HttpStatus.BAD_REQUEST);
         }
 //        Map BlogPostRequestModel to BlogPostDataModel
         BlogPostDataModel blogPostDataModel = new BlogPostDataModel();

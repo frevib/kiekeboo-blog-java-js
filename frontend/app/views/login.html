@@ -1,0 +1,15 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div ng-controller="loginController">
+                <h1>User Login</h1>
+                <form name="authenticate" ng-submit="submit()">
+                    <input ng-model="user.username" type="text" name="username" placeholder="username">
+                    <input ng-model="user.password" type="password" name="password" placeholder="password">
+                    <input type="submit" value="login">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

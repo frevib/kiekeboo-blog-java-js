@@ -32,6 +32,7 @@ public class AuthenticationController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/login", consumes = "application/json", produces = "application/json")
+//    TODO: change responses to login OK/200 etc.
     public ResponseEntity<JsonWebToken> authenticateUser(@RequestBody @Valid UserRequestModel userRequestModel, BindingResult bindingResult) {
         logger.info("HIT: /login");
 //        Check if model binding (JSON -> BlogPostRequestModel) went OK

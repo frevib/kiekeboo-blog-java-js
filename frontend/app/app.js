@@ -17,6 +17,9 @@ kiekebooApp.config(['$routeProvider', '$httpProvider', function($routeProvider, 
         .when('/admin', {
             templateUrl: 'app/views/admin.html'
         })
+        .when('/login', {
+            templateUrl: 'app/views/login.html'
+        })
         .otherwise({ redirectTo: '/' });
     $httpProvider.defaults.headers.common['Access-Control-Allow-Headers'] = "*";
 }]);
@@ -36,12 +39,13 @@ kiekebooApp.controller('bloglistController', function($scope, $http) {
 });
 
 kiekebooApp.controller('addPostController', function($scope, $http) {
+    var url = 'http://ubuntuserver:8080/kiekeboo-app-1.0-SNAPSHOT/blog/postblogitem';
     $scope.postBlogItem = function() {
         var data = {
                 title: $scope.title,
                 contents: $scope.contents
             };
-        $http.post('http://ubuntuserver:8080/kiekeboo-app-1.0-SNAPSHOT/blog/postblogitem', data)
+        $http.post(url, data)
             .success(function(data, status) {
                 $scope.response = data;
                 $scope.status = status;
@@ -64,4 +68,24 @@ kiekebooApp.controller('showpostController', function($scope, $http, $routeParam
             $scope.response = data;
             $scope.status = status;
         });
+});
+
+kiekebooApp.controller('loginController', function($scope, $http, $window) {
+    var url = 'http://ubuntuserver:8080/kiekeboo-app-1.0-SNAPSHOT/login/login';
+    $scope.submit = function() {
+        var data = {
+            username: $scope.user.username,
+            password: $scope.user.password
+        };
+        $http.post(url, data)
+            .success(function(data, status) {
+                console.log("awesome login!");
+                $window.sessionStorage.token = data.value;
+            })
+            .error(function(data, status) {
+                console.log("login failed....")
+                delete $window.sessionStorage.token;
+            });
+    };
+
 });

@@ -1,8 +1,7 @@
 package com.kiekeboo.app.filter;
 
-
-import com.kiekeboo.app.controller.AuthenticationController;
 import com.kiekeboo.app.services.JWTTokenService;
+import io.jsonwebtoken.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
 
 public class AuthorizationFilter implements Filter {
@@ -23,26 +21,31 @@ public class AuthorizationFilter implements Filter {
         this.jwtTokenService = jwtTokenService;
     }
 
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
-    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String tokenFromRequest = getToken((HttpServletRequest) request);
+        HttpServletRequest req = (HttpServletRequest) request;
+        String tokenFromRequest = getToken(req);
         try {
-            if (jwtTokenService.isValidToken(tokenFromRequest)) {
-                logger.info("Authorization successful!! token value: {}", tokenFromRequest);
-                chain.doFilter(request, response);
-            }
-        } catch (Exception e) {
-            throw new ServletException("Unauthorized, token not valid");
+//            Check if token HMAC is valid. Throws SignatureException if not valid
+            jwtTokenService.isValidToken(tokenFromRequest);
+            logger.info("Authorization successful!! token value: {}", tokenFromRequest);
+            chain.doFilter(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+            throw new ServletException("Servlet exception in doFilter");
+        } catch (SignatureException e) {
+            throw new SignatureException("Unauthorized, JWT Signature not valid");
         }
     }
 
     @Override
     public void destroy() {
+
+    }
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
 
     }
 

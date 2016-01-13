@@ -2,6 +2,8 @@ package com.kiekeboo.app.services;
 
 import com.kiekeboo.app.dao.AuthenticationDAO;
 import com.kiekeboo.app.model.UserDataModel;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.crypto.MacProvider;
@@ -9,8 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.tags.EscapeBodyTag;
-
-import java.security.Key;
 
 public class JWTTokenService {
 
@@ -28,23 +28,22 @@ public class JWTTokenService {
         this.key = key;
     }
 
-    public String getNewToken(UserDataModel user) throws Exception {
+    public String getNewToken(UserDataModel user) throws JwtException {
         return createToken(user);
     }
 
-    public boolean isValidToken(String jwt) throws Exception {
+    public void isValidToken(String jwt) throws JwtException {
         if(key == null) {
-            throw new Exception("No key set");
+            throw new JwtException("No key set");
         }
         try {
             Jwts.parser().setSigningKey(key).parse(jwt);
-        } catch (Exception e) {
-            throw new Exception("Unable to validate JWT");
+        } catch (SignatureException e) {
+            throw new SignatureException("JWT signature not OK");
         }
-        return true;
     }
 
-    private String createToken(UserDataModel user) throws Exception {
+    private String createToken(UserDataModel user) throws JwtException {
 //        Key key = MacProvider.generateKey();
 //        TODO: change key to user specific key! This key is just here to test the authorizationFilter.
 //        For now use static key "hello" in b64.

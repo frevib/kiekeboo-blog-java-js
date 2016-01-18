@@ -1,29 +1,6 @@
+'use strict';
+
 var kiekebooApp = angular.module('kiekebooapp', ['ngRoute']);
-
-kiekebooApp.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
-    $routeProvider
-        .when('/', {
-            templateUrl: 'app/views/blog_list.html',
-            controller: 'bloglistController'
-        })
-        .when('/showpost/:blogpostId', {
-            templateUrl: 'app/views/show_post.html',
-            controller: 'showpostController'
-        })
-        .when('/blog_list', {
-            templateUrl: 'app/views/blog_list.html',
-            controller: 'bloglistController'
-        })
-        .when('/admin', {
-            templateUrl: 'app/views/admin.html'
-        })
-        .when('/login', {
-            templateUrl: 'app/views/login.html'
-        })
-        .otherwise({ redirectTo: '/' });
-    $httpProvider.defaults.headers.common['Access-Control-Allow-Headers'] = "*";
-}]);
-
 
 kiekebooApp.controller('bloglistController', function($scope, $http) {
     var url = 'http://ubuntuserver:8080/kiekeboo-app-1.0-SNAPSHOT/blog/getlatestblogposts';
@@ -39,7 +16,7 @@ kiekebooApp.controller('bloglistController', function($scope, $http) {
 });
 
 kiekebooApp.controller('addPostController', function($scope, $http) {
-    var url = 'http://ubuntuserver:8080/kiekeboo-app-1.0-SNAPSHOT/blog/postblogitem';
+    var url = 'http://ubuntuserver:8080/kiekeboo-app-1.0-SNAPSHOT/admin/addpost';
     $scope.postBlogItem = function() {
         var data = {
                 title: $scope.title,
@@ -81,11 +58,64 @@ kiekebooApp.controller('loginController', function($scope, $http, $window) {
             .success(function(data, status) {
                 console.log("awesome login!");
                 $window.sessionStorage.token = data.value;
+                $window.location.href = '/#/admin';
             })
             .error(function(data, status) {
                 console.log("login failed....")
                 delete $window.sessionStorage.token;
+                $rootScope.loginMessage = "Username or password incorrect";
             });
     };
+});
+
+kiekebooApp.factory('authInterceptor', function($rootScope, $q, $window) {
+    return {
+        request: function(config) {
+            config.headers = config.headers || {};
+            if($window.sessionStorage.token) {
+                config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
+            }
+            return config;
+        },
+        response: function(response) {
+            return response;
+        }
+        //response: function(response) {
+        //    if(response.status === 401) {
+        //        if($window.location.href == '/#/admin') {
+        //            console.log("auth 401")
+        //            //$rootScope.loginMessage = 'You are not authenticated, please login';
+        //            //$window.location.href = '/#/login';
+        //        }
+        //        return response || $q.when(response);
+        //    }
+        //}
+    }
 
 });
+
+kiekebooApp.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
+    $routeProvider
+        .when('/', {
+            templateUrl: 'app/views/blog_list.html',
+            controller: 'bloglistController'
+        })
+        .when('/showpost/:blogpostId', {
+            templateUrl: 'app/views/show_post.html',
+            controller: 'showpostController'
+        })
+        .when('/blog_list', {
+            templateUrl: 'app/views/blog_list.html',
+            controller: 'bloglistController'
+        })
+        .when('/admin', {
+            templateUrl: 'app/views/admin.html'
+        })
+        .when('/login', {
+            templateUrl: 'app/views/login.html'
+        })
+        .otherwise({ redirectTo: '/' });
+    $httpProvider.defaults.headers.common['Access-Control-Allow-Headers'] = "*";
+    $httpProvider.interceptors.push('authInterceptor');
+}]);
+

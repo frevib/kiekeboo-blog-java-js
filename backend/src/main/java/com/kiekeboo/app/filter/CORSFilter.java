@@ -17,7 +17,7 @@ public class CORSFilter implements Filter {
         response.setHeader("Access-Control-Max-Age", "3600");
 //        Preflight CORS
         response.setHeader("Access-Control-Allow-Methods", "GET, POST");
-        response.setHeader("Access-Control-Allow-Headers", "accept, access-control-allow-headers, content-type");
+        response.setHeader("Access-Control-Allow-Headers", "accept, access-control-allow-headers, Authorization, content-type");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         chain.doFilter(req, res);
     }

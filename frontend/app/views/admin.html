@@ -12,17 +12,13 @@
             <div class="form-group">
                 <label for="contents2">Contents:</label>
                 <textarea ng-model="contents" id="contents2" class="form-control" placeholder="Contents" maxlength="1500" rows="6"></textarea>
-                <!--<input type="text" class="form-control" name="contents" id="contents">-->
             </div>
             <input type="submit" value="Add!">
         </form>
         <br>
-        <b ng-show="response == true && status == 200">Items successfully added</b>
-        <b ng-show="response == false && status == 200">Item not added, please try again</b>
-        <b ng-show="status != null && status != 200">At the moment it is not possible to add posts</b>
-        <!--<b ng-if="result">Post succesfully added</b>-->
-    </div>
-            </div>
-        </div>
+        <b>{{ response.message }}</b>
 
+    </div>
+        </div>
+    </div>
 </div>

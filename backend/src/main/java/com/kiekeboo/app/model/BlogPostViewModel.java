@@ -1,8 +1,10 @@
 package com.kiekeboo.app.model;
 
+import com.kiekeboo.app.model.interfaces.BlogPostInterface;
+
 import java.util.Date;
 
-public class BlogPostResponseModel {
+public class BlogPostViewModel implements BlogPostInterface{
 
     private int id;
     private String title;
@@ -50,6 +52,5 @@ public class BlogPostResponseModel {
     public void setWriter(String writer) {
         this.writer = writer;
     }
-
 
 }

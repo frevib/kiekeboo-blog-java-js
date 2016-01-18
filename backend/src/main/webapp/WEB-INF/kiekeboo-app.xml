@@ -8,16 +8,6 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-    <!-- Commented out because not needed for service -->
-    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-    <!--<property name="prefix">-->
-    <!--<value>/WEB-INF/pages/</value>-->
-    <!--</property>-->
-    <!--<property name="suffix">-->
-    <!--<value>.jsp</value>-->
-    <!--</property>-->
-    <!--</bean>-->
-
     <context:property-placeholder location="classpath:database.properties" />
 
     <!--For blog service-->

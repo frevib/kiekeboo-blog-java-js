@@ -34,7 +34,7 @@ public class AuthenticationDAO {
             if(userData.size() < 1) {
                 logger.warn("No user found (empty resultset)");
             } else {
-                logger.error("--CRITICAL ERROR!-- More than one user in resultset (!)");
+                logger.warn("--CRITICAL!-- More than one user in resultset (!)");
             }
             throw new HibernateException("Error fetching user from database");
         }

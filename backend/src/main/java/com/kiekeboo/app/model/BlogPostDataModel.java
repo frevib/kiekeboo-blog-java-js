@@ -1,23 +1,49 @@
 package com.kiekeboo.app.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.kiekeboo.app.model.interfaces.BlogPostInterface;
 import com.kiekeboo.app.services.CustomDateSerializerService;
+import com.kiekeboo.app.validation.TitleValidate;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
-public class BlogPostDataModel extends BlogPostModel{
+public class BlogPostDataModel implements BlogPostInterface {
 
     private int blogpostId;
-    private String title;
-    private String contents;
     private Date date;
 
     @Length(min = 1, max = 30)
     @Pattern(regexp = "[\\w\\s]*", message = "not a valid writer")
     private String writer;
 
+    @NotNull
+    @TitleValidate
+    private String title;
+
+    @NotNull
+    @Size(min=1, max=1500, message = "Too many characters")
+    private String contents;
+
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
 
     public int getBlogpostId() {
         return blogpostId;
@@ -44,6 +70,8 @@ public class BlogPostDataModel extends BlogPostModel{
         this.writer = writer;
     }
 
+
+//    TODO: this is a constructor you dummy!
     public BlogPostDataModel mapRequestToDataModel(BlogPostRequestModel blogPostRequestModel) {
         this.setTitle(blogPostRequestModel.getTitle());
         this.setContents(blogPostRequestModel.getContents());

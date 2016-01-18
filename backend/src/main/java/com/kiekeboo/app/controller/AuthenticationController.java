@@ -49,7 +49,7 @@ public class AuthenticationController {
             logger.info("User successfully authenticated, token generated");
         } catch (Exception e) {
             logger.warn("Authentication failed");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         if (userAuthenticatedToken != null) {
             logger.info("Request OK, fetching TOKEN");

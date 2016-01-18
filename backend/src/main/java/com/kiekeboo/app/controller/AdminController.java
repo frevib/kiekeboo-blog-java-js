@@ -3,8 +3,7 @@ package com.kiekeboo.app.controller;
 import com.kiekeboo.app.dao.BlogDAO;
 import com.kiekeboo.app.model.BlogPostDataModel;
 import com.kiekeboo.app.model.BlogPostRequestModel;
-import com.kiekeboo.app.model.BlogPostResponseModel;
-import com.kiekeboo.app.services.AuthenticationService;
+import com.kiekeboo.app.model.ResponseMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +32,13 @@ public class AdminController {
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST, value = "/addpost", consumes = "application/json")
-    public ResponseEntity<String> saveBlogPost(@RequestBody @Valid BlogPostRequestModel blogPostRequestModel, BindingResult bindingResult) throws Exception {
+    @RequestMapping(method = RequestMethod.POST, value = "/addpost", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<ResponseMessage> saveBlogPost(@RequestBody @Valid BlogPostRequestModel blogPostRequestModel, BindingResult bindingResult) throws Exception {
         logger.info("HIT: /postblogitem");
 //        Check if model binding (JSON -> BlogPostRequestModel) went OK
         if (bindingResult.hasErrors()) {
             logger.warn("Error in bindingresult: {}", bindingResult.toString());
-            return new ResponseEntity<>("Item NOT added, invalid user input", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseMessage("Item NOT added, invalid characters in title or blog contents"), HttpStatus.BAD_REQUEST);
         }
 //        Map BlogPostRequestModel to BlogPostDataModel
         BlogPostDataModel blogPostDataModel = new BlogPostDataModel();
@@ -48,11 +47,11 @@ public class AdminController {
         try {
             blogDAO.saveBlogPost(blogPostDataModel);
             logger.info("Blog post successfully saved in database!");
-            return new ResponseEntity<>("Item added", HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseMessage("Item added"), HttpStatus.OK);
 
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>("Item NOT added", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseMessage("Item NOT added"), HttpStatus.BAD_REQUEST);
         }
     }
 }

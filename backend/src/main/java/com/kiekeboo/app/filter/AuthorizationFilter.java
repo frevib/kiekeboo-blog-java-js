@@ -17,7 +17,7 @@ public class AuthorizationFilter implements Filter {
     private final Logger logger = LoggerFactory.getLogger(AuthorizationFilter.class);
 
     @Autowired
-    AuthorizationFilter(JWTTokenService jwtTokenService) {
+    public AuthorizationFilter(JWTTokenService jwtTokenService) {
         this.jwtTokenService = jwtTokenService;
     }
 
@@ -25,17 +25,22 @@ public class AuthorizationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
-        String tokenFromRequest = getToken(req);
-        try {
-//            Check if token HMAC is valid. Throws SignatureException if not valid
-            jwtTokenService.isValidToken(tokenFromRequest);
-            logger.info("Authorization successful!! token value: {}", tokenFromRequest);
+        if(req.getMethod().equalsIgnoreCase("OPTIONS")) {
+            logger.info("Request method == OPTIONS");
             chain.doFilter(request, response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-            throw new ServletException("Servlet exception in doFilter");
-        } catch (SignatureException e) {
-            throw new SignatureException("Unauthorized, JWT Signature not valid");
+        } else {
+            String tokenFromRequest = getToken(req);
+            try {
+//            Check if token HMAC is valid. Throws SignatureException if not valid
+                jwtTokenService.isValidToken(tokenFromRequest);
+                logger.info("Authorization successful!! token value: {}", tokenFromRequest);
+                chain.doFilter(request, response);
+            } catch (ServletException e) {
+                e.printStackTrace();
+                throw new ServletException("Servlet exception in doFilter");
+            } catch (SignatureException e) {
+                throw new SignatureException("Unauthorized, JWT Signature not valid");
+            }
         }
     }
 
@@ -54,18 +59,15 @@ public class AuthorizationFilter implements Filter {
         if(authorizationHeader == null) {
             throw new ServletException("Unauthorized, no Authorization header present.");
         }
-
         String[] parts = authorizationHeader.split(" ");
         if(parts.length != 2) {
             throw new ServletException("Unauthorized, not a valid format header. Must be Authorization: Bearer [token]");
         }
-
         String scheme = parts[0];
         Pattern pattern = Pattern.compile("^Bearer$", Pattern.CASE_INSENSITIVE);
         if(pattern.matcher(scheme).matches()) {
             return new String(parts[1]);
         }
-
         throw new ServletException("Unauthorized, error with token processing");
     }
 

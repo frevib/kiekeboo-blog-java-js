@@ -1,12 +1,9 @@
 package com.kiekeboo.app.controller;
 
 import com.kiekeboo.app.model.BlogPostDataModel;
-import com.kiekeboo.app.model.BlogPostRequestModel;
-import com.kiekeboo.app.model.BlogPostResponseModel;
+import com.kiekeboo.app.model.BlogPostViewModel;
 import com.kiekeboo.app.dao.BlogDAO;
 
-import org.hibernate.HibernateException;
-import org.hibernate.validator.constraints.Length;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -14,17 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Valid;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.constraints.Max;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/blog")
@@ -39,6 +28,7 @@ public class BlogController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "*")
+//    TODO: must return ViewModel
     public ResponseEntity<BlogPostDataModel> getBlogPost() {
         logger.info("HIT: /*");
         BlogPostDataModel blogPostDataModel;
@@ -56,7 +46,7 @@ public class BlogController {
     @RequestMapping(method = RequestMethod.GET, value = "/getblogpost/{id}")
     public ResponseEntity<BlogPostDataModel> getBlogPostById(@PathVariable int id) {
         logger.info("HIT: /getblogpost/{}", id);
-//        Valition for @PathVariable not supported, so created this QnD fix.. better use JAX-RS
+//        Validation for @PathVariable not supported, so created this QnD fix.. better use JAX-RS
         if(id < 1 && id > 9999) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -72,17 +62,17 @@ public class BlogController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "/getlatestblogposts")
-    public ResponseEntity<List<BlogPostResponseModel>> getLatestBlogPosts() {
+    public ResponseEntity<List<BlogPostViewModel>> getLatestBlogPosts() {
         logger.info("HIT: /getlatestblogposts");
-        List<BlogPostResponseModel> blogPostResponseModelList;
+        List<BlogPostViewModel> blogPostViewModelList;
         try {
-            blogPostResponseModelList = blogDAO.getLatestBlogPosts();
+            blogPostViewModelList = blogDAO.getLatestBlogPosts();
             logger.info("Successfully fetched latest blogposts from database, returning this data to user");
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(blogPostResponseModelList, HttpStatus.OK);
+        return new ResponseEntity<>(blogPostViewModelList, HttpStatus.OK);
     }
 
 

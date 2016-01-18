@@ -16,7 +16,7 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!--Spring filter for dependency injection-->
+    <!--Spring filter so dependency injection can be used-->
     <filter>
         <filter-name>authorizationFilter</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -25,16 +25,6 @@
         <filter-name>authorizationFilter</filter-name>
         <url-pattern>/admin/*</url-pattern>
     </filter-mapping>
-
-    <!--<filter>-->
-        <!--<filter-name>AuthorizationFilter</filter-name>-->
-        <!--<filter-class>com.kiekeboo.app.filter.AuthorizationFilter</filter-class>-->
-    <!--</filter>-->
-
-    <!--<filter-mapping>-->
-        <!--<filter-name>AuthorizationFilter</filter-name>-->
-        <!--<url-pattern>/admin/*</url-pattern>-->
-    <!--</filter-mapping>-->
 
     <!-- Servlet config-->
     <servlet>

@@ -1,7 +1,7 @@
 package com.kiekeboo.app.dao;
 
 import com.kiekeboo.app.model.BlogPostDataModel;
-import com.kiekeboo.app.model.BlogPostResponseModel;
+import com.kiekeboo.app.model.BlogPostViewModel;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
@@ -20,14 +20,15 @@ public class BlogDAO {
 
 //    Get X latest blog posts from database
     @Transactional
-    public List<BlogPostResponseModel> getLatestBlogPosts() throws HibernateException {
-        List<BlogPostResponseModel> blogPostResponseModelList = (List<BlogPostResponseModel>) sessionFactory.getCurrentSession()
+    public List<BlogPostViewModel> getLatestBlogPosts() throws HibernateException {
+//        TODO: return data in BlogPostDataModel persistent object, then move to BlogPostViewModel
+        List<BlogPostViewModel> blogPostViewModelList = (List<BlogPostViewModel>) sessionFactory.getCurrentSession()
                 .createCriteria(BlogPostDataModel.class)
                 .setMaxResults(10)
                 .addOrder(Order.desc("blogpostId"))
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
-        return blogPostResponseModelList;
+        return blogPostViewModelList;
     }
 
 //    Add a blogpost to the database
@@ -38,9 +39,10 @@ public class BlogDAO {
 
 //    Get specific blogpost from database by id
     @Transactional
-    public BlogPostDataModel getBlogPostById(int geit) throws HibernateException {
-//        TODO: cast objects of different types, BlogPostDataModel and BlogPostResponseModel
-        BlogPostDataModel blogPostDataModel = (BlogPostDataModel) sessionFactory.getCurrentSession().get(BlogPostDataModel.class, geit);
+    public BlogPostDataModel getBlogPostById(int id) throws HibernateException {
+//        TODO: cast objects of different types, BlogPostDataModel and BlogPostViewModel
+//        TODO: return data in blogPostDataModel persistent object, then move to BlogPostViewModel
+        BlogPostDataModel blogPostDataModel = (BlogPostDataModel) sessionFactory.getCurrentSession().get(BlogPostDataModel.class, id);
         return blogPostDataModel;
     }
 

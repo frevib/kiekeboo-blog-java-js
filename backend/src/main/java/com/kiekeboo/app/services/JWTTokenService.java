@@ -1,70 +1,56 @@
 package com.kiekeboo.app.services;
 
-import com.kiekeboo.app.dao.AuthenticationDAO;
 import com.kiekeboo.app.model.UserDataModel;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.SignatureException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.impl.crypto.MacProvider;
+import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.tags.EscapeBodyTag;
+import org.springframework.beans.factory.annotation.Value;
+
+import java.util.Date;
+
 
 public class JWTTokenService {
 
-    private AuthenticationDAO authenticationDAO;
     private final Logger logger = LoggerFactory.getLogger(JWTTokenService.class);
-    private String key;
 
-    @Autowired
-    public JWTTokenService(AuthenticationDAO authenticationDAO) {
-        this.authenticationDAO = authenticationDAO;
-        this.key = "aGVsbG8=";
-    }
+    @Value("${jwt.password}")
+    private String password;
 
-    public void setKey(String key) {
-        this.key = key;
-    }
+//    Token expiration time in milliseconds
+    @Value("${jwt.expirytime}")
+    private long ttlMillis;
 
     public String getNewToken(UserDataModel user) throws JwtException {
-        return createToken(user);
+        return createNewToken(user);
     }
 
     public void isValidToken(String jwt) throws JwtException {
-        if(key == null) {
+        if(password == null) {
             throw new JwtException("No key set");
         }
-        try {
-            Jwts.parser().setSigningKey(key).parse(jwt);
-        } catch (SignatureException e) {
-            throw new SignatureException("JWT signature not OK");
+//        Check if signature is OK
+        if(!Jwts.parser().isSigned(jwt)) {
+            throw new SignatureException("Not a signed JWT");
         }
+        JwtParser jwtParser = Jwts.parser().setSigningKey(password);
+//        TODO: check expiry time and refresh token
+        jwtParser.parse(jwt);
+//            Claims claims = jwtParser.parseClaimsJws(jwt).getBody();
+//            logger.info("JWT expiry date: {}", claims.getExpiration());
+        logger.info("JWT sent by user is checked and valid");
     }
 
-    private String createToken(UserDataModel user) throws JwtException {
-//        Key key = MacProvider.generateKey();
-//        TODO: change key to user specific key! This key is just here to test the authorizationFilter.
-//        For now use static key "hello" in b64.
-//        String b64key = "aGVsbG8=";
-        String jwt = "";
+    private String createNewToken(UserDataModel user) throws JwtException {
+        String jwt;
         try {
             jwt = Jwts.builder()
-                    .setSubject(user.getUsername() + user.getRole_id())
-//                    "aGVsbG8=" is base64 encoded "hello"
-                    .signWith(SignatureAlgorithm.HS512, key)
+                    .setSubject(user.getUsername() + user.getRoleId())
+                    .setExpiration(new Date(System.currentTimeMillis() + ttlMillis))
+                    .signWith(SignatureAlgorithm.HS512, password)
                     .compact();
+            logger.info("Created JWT with expiry date: {}", Jwts.parser().setSigningKey(password).parseClaimsJws(jwt).getBody().getExpiration());
         } catch (Exception e) {
             logger.warn("Could not generate Key");
-            return null;
-        }
-        try {
-//            TODO: add key to database. For now just use static key
-//            authenticationDAO.addKeytoDatabase(PasswordService.bytesToHex(key.getEncoded()));
-            logger.info("Added JWT HMAC key to database");
-        } catch (Exception e) {
-            logger.warn("Could not add JWT HMAC key to database");
             return null;
         }
 //        TODO: encrypt jwt with AES-GCM and the Key

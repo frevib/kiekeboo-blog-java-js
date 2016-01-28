@@ -34,7 +34,7 @@ public class AdminController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/addpost", consumes = "application/json", produces = "application/json")
     public ResponseEntity<ResponseMessage> saveBlogPost(@RequestBody @Valid BlogPostRequestModel blogPostRequestModel, BindingResult bindingResult) throws Exception {
-        logger.info("HIT: /postblogitem");
+        logger.info("HIT: /addpost");
 //        Check if model binding (JSON -> BlogPostRequestModel) went OK
         if (bindingResult.hasErrors()) {
             logger.warn("Error in bindingresult: {}", bindingResult.toString());

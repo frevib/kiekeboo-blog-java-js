@@ -3,9 +3,9 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee">
 
-	<display-name>Kiekebook web application</display-name>
+	<display-name>Kiekeboo web application</display-name>
 
-    <!-- CORS filter config-->
+     <!--CORS filter config-->
     <filter>
         <filter-name>CORSFilter</filter-name>
         <filter-class>com.kiekeboo.app.filter.CORSFilter</filter-class>
@@ -16,20 +16,15 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!--Spring filter so dependency injection can be used-->
-    <filter>
-        <filter-name>authorizationFilter</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>authorizationFilter</filter-name>
-        <url-pattern>/admin/*</url-pattern>
-    </filter-mapping>
-
-    <!-- Servlet config-->
+    <!-- Sprint dispatcher Servlet config-->
     <servlet>
 		<servlet-name>kiekeboo</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/kiekeboo-servlet.xml</param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
 	</servlet>
 
@@ -39,13 +34,12 @@
 	</servlet-mapping>
 
     <!-- Context config -->
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/kiekeboo-app.xml</param-value>
-    </context-param>
+    <!--<context-param>-->
+    <!--<param-name>contextConfigLocation</param-name>-->
+    <!--<param-value>/WEB-INF/kiekeboo-app.xml</param-value>-->
+    <!--</context-param>-->
+    <!--<listener>-->
+    <!--<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
+    <!--</listener>-->
 
 </web-app>

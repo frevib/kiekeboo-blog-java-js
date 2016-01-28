@@ -1,6 +1,30 @@
 package com.kiekeboo.app.model;
 
-public class UserRequestModel extends UserModel {
+import javax.validation.constraints.Pattern;
 
-//    TODO: split userModel, don't use abstraction.
+public class UserRequestModel {
+
+    // Only allow word characters, max length 30
+    @Pattern(regexp = "[\\w]{1,30}", message = "Username contains invalid characters")
+    private String username;
+
+    // Only allow word characters, max length 50
+    @Pattern(regexp = "[\\w\\s]{1,50}", message = "Password contains invalid characters")
+    private String password;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

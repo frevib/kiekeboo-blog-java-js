@@ -1,21 +1,47 @@
 package com.kiekeboo.app.model;
 
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
-public class UserDataModel extends UserModel {
+public class UserDataModel {
 
     private int userId;
     private Date loginDate;
     private String salt;
-    private int role_id;
+    private int roleId;
     private String encryptionKeyJWT;
 
-    public int getRole_id() {
-        return role_id;
+//    don't need to validate again in for the transport (database) data
+    // Only allow word characters, max length 30
+    @Pattern(regexp = "[\\w]{1,30}", message = "Username contains invalid characters")
+    private String username;
+
+    // Only allow word characters, max length 50
+    @Pattern(regexp = "[\\w\\s]{1,50}", message = "Password contains invalid characters")
+    private String password;
+
+    public String getUsername() {
+        return username;
     }
 
-    public void setRole_id(int role_id) {
-        this.role_id = role_id;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int role_id) {
+        this.roleId = role_id;
     }
 
     public int getUserId() {

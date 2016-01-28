@@ -20,7 +20,7 @@
         </id>
         <property name="username" column="username" type="string"/>
         <property name="password" column="password" type="string"/>
-        <property name="role_id" column="role_id" type="integer"/>
+        <property name="roleId" column="role_id" type="integer"/>
         <property name="salt" column="password_salt" type="string"/>
         <!--<property name="encryptionKeyJWT" column="encryptionkeyjwt"/>-->
     </class>

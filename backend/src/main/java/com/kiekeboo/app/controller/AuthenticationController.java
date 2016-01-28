@@ -11,12 +11,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/login")
@@ -32,13 +35,12 @@ public class AuthenticationController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/login", consumes = "application/json", produces = "application/json")
-//    TODO: change responses to login OK/200 etc.
-    public ResponseEntity<JsonWebToken> authenticateUser(@RequestBody @Valid UserRequestModel userRequestModel, BindingResult bindingResult) {
+    public ResponseEntity<JsonWebToken> authenticateUser(@RequestBody @Valid UserRequestModel userRequestModel, BindingResult bindingResult, HttpServletResponse response) {
         logger.info("HIT: /login");
 //        Check if model binding (JSON -> BlogPostRequestModel) went OK
         if (bindingResult.hasErrors()) {
-            logger.warn("invalid request");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            logger.warn("Error in bindingresult in AuthenticationController: {}", bindingResult.toString());
+            return new ResponseEntity<>(new JsonWebToken("invalid characters in username or password"), HttpStatus.BAD_REQUEST);
         }
         UserDataModel userDataModel = new UserDataModel();
         userDataModel = userDataModel.mapRequestToDataModel(userRequestModel);
@@ -49,17 +51,18 @@ public class AuthenticationController {
             logger.info("User successfully authenticated, token generated");
         } catch (Exception e) {
             logger.warn("Authentication failed");
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new JsonWebToken("Username or password invalid"), HttpStatus.UNAUTHORIZED);
         }
         if (userAuthenticatedToken != null) {
-            logger.info("Request OK, fetching TOKEN");
+            logger.info("Request OK, returning authentication token to user");
 //              TODO: Return token as Authorization Bearer header
             JsonWebToken jwt = new JsonWebToken();
             jwt.setValue(userAuthenticatedToken);
+            response.setHeader("Authentication", "Bearer " + userAuthenticatedToken);
             return new ResponseEntity<>(jwt, HttpStatus.OK);
         }
         logger.info("Login failed, no token served");
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new JsonWebToken("Authentication failed"), HttpStatus.BAD_REQUEST);
     }
 
 }

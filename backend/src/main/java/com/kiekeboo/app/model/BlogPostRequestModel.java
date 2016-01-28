@@ -2,6 +2,7 @@ package com.kiekeboo.app.model;
 
 import com.kiekeboo.app.model.interfaces.BlogPostInterface;
 import com.kiekeboo.app.validation.TitleValidate;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -13,7 +14,7 @@ public class BlogPostRequestModel implements BlogPostInterface{
     private String title;
 
     @NotNull
-    @Size(min=1, max=1500, message = "Too many characters")
+    @Length(min=1, max=300, message = "Too many characters for blogpost contents")
     private String contents;
 
 

@@ -15,8 +15,11 @@ kiekebooApp.controller('bloglistController', function($scope, $http) {
         });
 });
 
-kiekebooApp.controller('addPostController', function($scope, $http) {
+kiekebooApp.controller('addPostController', function($scope, $http, $window) {
     var url = 'http://ubuntuserver:8080/kiekeboo-app-1.0-SNAPSHOT/admin/addpost';
+    if(!$window.sessionStorage.token) {
+        $window.location.href = '/#/login'
+    }
     $scope.postBlogItem = function() {
         var data = {
                 title: $scope.title,
@@ -63,8 +66,8 @@ kiekebooApp.controller('loginController', function($scope, $http, $window) {
             .error(function(data, status) {
                 console.log("login failed....")
                 delete $window.sessionStorage.token;
-                $rootScope.loginMessage = "Username or password incorrect";
-            });
+                $scope.response = data;
+                            });
     };
 });
 
@@ -113,6 +116,7 @@ kiekebooApp.config(['$routeProvider', '$httpProvider', function($routeProvider, 
         })
         .when('/login', {
             templateUrl: 'app/views/login.html'
+            //controller: 'loginController'
         })
         .otherwise({ redirectTo: '/' });
     $httpProvider.defaults.headers.common['Access-Control-Allow-Headers'] = "*";

@@ -8,7 +8,7 @@
                         {{ blogpost.title }}
                     </h2>
                     <h4 class="post-subtitle">
-                        {{ blogpost.contents | limitTo:limitText }}<b ng-show="blogpost.contents.length > 10">....<div class="read-more">(read more)</div></b>
+                        {{ blogpost.contents | limitTo:limitText }}<b ng-if="blogpost.contents.length > 10">....<div class="read-more">(read more)</div></b>
                     </h4>
                 </a>
                 <!-- TODO: blogpost.writer, blogpost.date-->

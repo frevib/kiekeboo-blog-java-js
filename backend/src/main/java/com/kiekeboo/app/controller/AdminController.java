@@ -35,7 +35,7 @@ public class AdminController {
     @RequestMapping(method = RequestMethod.POST, value = "/addpost", consumes = "application/json", produces = "application/json")
     public ResponseEntity<ResponseMessage> saveBlogPost(@RequestBody @Valid BlogPostRequestModel blogPostRequestModel, BindingResult bindingResult) throws Exception {
         logger.info("HIT: /addpost");
-//        Check if model binding (JSON -> BlogPostRequestModel) went OK
+//        Check if model binding (JSON -> BlogPostRequestModel) and validation of BlogPostRequestModel went OK
         if (bindingResult.hasErrors()) {
             logger.warn("Error in bindingresult: {}", bindingResult.toString());
             return new ResponseEntity<>(new ResponseMessage("Item NOT added, invalid characters in title or blog contents"), HttpStatus.BAD_REQUEST);
@@ -50,7 +50,7 @@ public class AdminController {
             return new ResponseEntity<>(new ResponseMessage("Item added"), HttpStatus.OK);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.warn(e.getMessage());
             return new ResponseEntity<>(new ResponseMessage("Item NOT added"), HttpStatus.BAD_REQUEST);
         }
     }

@@ -32,8 +32,12 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         }
         try {
             String tokenFromRequest = getToken(request);
-//            Check if token HMAC is valid. Throws SignatureException, ExpiredJwtException or JwtException if not valid
-            jwtTokenService.isValidToken(tokenFromRequest);
+//            Check if token is valid. Throws SignatureException, ExpiredJwtException or JwtException if not valid
+            String jwt = jwtTokenService.isValidToken(tokenFromRequest);
+//            if jwt != null the refresh token is added as response header
+            if(jwt != null) {
+                response.addHeader("TokenRefresher", jwt);
+            }
             return true;
 
         } catch (SignatureException e) {
@@ -58,7 +62,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
     private void createJSONResponse(HttpServletResponse response, String message) throws IOException {
         response.getWriter().write(message);
         response.setCharacterEncoding("UTF-8");
-        response.setStatus(400);
+        response.setStatus(401);
         response.addHeader("Content-Type", "application/json");
     }
 

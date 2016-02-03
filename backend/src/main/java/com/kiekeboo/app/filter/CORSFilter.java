@@ -21,6 +21,7 @@ public class CORSFilter implements Filter {
             response.setHeader("Access-Control-Allow-Methods", "GET, POST");
             response.setHeader("Access-Control-Allow-Headers", "accept, access-control-allow-headers, Authorization, content-type");
             response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("Access-Control-Expose-Headers", "TokenRefresher");
             chain.doFilter(req, res);
         } catch (Exception e) {
             e.printStackTrace();

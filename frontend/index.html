@@ -11,6 +11,7 @@
     <script src="lib/angularjs/angular.js"></script>
     <script src="js/angular-route.min.js"></script>
     <script src="app/app.js"></script>
+    <script src="js/functions.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/style.css" />
     <!--<link rel="stylesheet" type="text/css" href="css/main.css">-->
@@ -38,6 +39,8 @@
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
 
+                <a class="navbar-text" ng-if="loginStatus == true" ng-cloak href="/#/logout">logout?</a>
+                <p class="navbar-text" ng-if="loginStatus == null" ng-cloak>Not logged in</p>
 
             </div>
         </nav>

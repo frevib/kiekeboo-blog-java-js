@@ -20,12 +20,12 @@ public class BlogPostDataModel implements BlogPostInterface {
     @Pattern(regexp = "[\\w\\s]*", message = "not a valid writer")
     private String writer;
 
-    @NotNull
-    @TitleValidate
+//    @NotNull
+//    @TitleValidate
     private String title;
 
-    @NotNull
-    @Size(min=1, max=1500, message = "Too many characters")
+//    @NotNull
+//    @Size(min=1, max=1500, message = "Too many characters")
     private String contents;
 
 

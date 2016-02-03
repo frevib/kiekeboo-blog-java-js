@@ -20,7 +20,7 @@ public class TitleValidateImplementation implements ConstraintValidator<TitleVal
 
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
         final int MAX_LENGTH = 50;
-        final Pattern allowedCharacters = Pattern.compile("[\\w\\s]*");
+        final Pattern allowedCharacters = Pattern.compile("[\\w\\s.,?!]*");
         final Matcher matcher = allowedCharacters.matcher(value);
 
         // Check length

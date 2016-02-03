@@ -4,7 +4,7 @@ import com.kiekeboo.app.model.interfaces.BlogPostInterface;
 
 import java.util.Date;
 
-public class BlogPostViewModel implements BlogPostInterface{
+public class BlogPostViewModel implements BlogPostInterface {
 
     private int id;
     private String title;

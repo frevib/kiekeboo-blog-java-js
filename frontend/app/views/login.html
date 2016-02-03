@@ -9,8 +9,8 @@
                     <input ng-model="user.password" type="password" name="password" placeholder="password">
                     <input type="submit" value="login">
                 </form>
-                <b>{{ response.message }}</b>
-                <b>{{ loginMessage }}</b>
+                <b ng-cloak>{{ response.message }}</b>
+                <b ng-cloak>{{ loginMessage }}</b>
             </div>
         </div>
     </div>

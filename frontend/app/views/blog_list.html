@@ -3,16 +3,16 @@
     <div class="row" ng-repeat="blogpost in response track by $index">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="post-preview">
-                <a href="#/showpost/{{ blogpost.blogpostId }}">
+                <a ng-cloak href="#/showpost/{{ blogpost.blogpostId }}">
                     <h2 class="post-title">
-                        {{ blogpost.title }}
+                        <span ng-cloak>{{ blogpost.title }}</span>
                     </h2>
                     <h4 class="post-subtitle">
-                        {{ blogpost.contents | limitTo:limitText }}<b ng-if="blogpost.contents.length > 10">....<div class="read-more">(read more)</div></b>
+                        <span ng-cloak>{{ blogpost.contents | limitTo:limitText }}</span><b ng-if="blogpost.contents.length > 10">....<div class="read-more">(read more)</div></b>
                     </h4>
                 </a>
                 <!-- TODO: blogpost.writer, blogpost.date-->
-                <p class="post-meta">Posted by {{blogpost.writer}} on {{blogpost.date}}</p>
+                <p class="post-meta">Posted by <span ng-cloak>{{blogpost.writer}}</span> on <span ng-cloak>{{blogpost.date}}</span></p>
             </div>
             <hr>
         </div>

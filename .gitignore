@@ -6,4 +6,4 @@ backend/target/*
 .DS_Store
 database.properties
 password.properties
-*.sql
+fill_tables.sql

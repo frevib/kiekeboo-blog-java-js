@@ -21,12 +21,20 @@ public class AuthenticationService {
         this.JWTTokenService = JWTTokenService;
     }
 
-//    authenticate user based on username and password, return some kind of token (JWS?)
+    /**
+     * Authenticate user based on username and password, return a Json web token.
+     *
+     * @param userDataFromPost
+     * @return String JsonWebToken
+     * @throws Exception
+     */
     public String authenticate(UserDataModel userDataFromPost) throws Exception {
         logger.info("LOGIN: user {} tries to login", userDataFromPost.getUsername());
-//        TODO: could be nicer written logic
-//        TODO: CRITICAL fix throws!
+        //  TODO: could be nicer written logic
+        //  TODO: CRITICAL, fix throws!
         UserDataModel user;
+
+        // Fetch user information from database.
         try {
             user = authenticationDAO.getUserFromDatabase(userDataFromPost.getUsername());
             logger.info("Fetched user object from database");
@@ -34,13 +42,15 @@ public class AuthenticationService {
             logger.warn("Could not fetch password and salt from database");
             throw new Exception("Could not fetch password and salt from database");
         }
+
+        // Now the user information is know, check if the credentials given by the user are correct.
+        // If correct (login OK), return a JsonWebToken (authentication token) to the user.
         PasswordAndSaltModel passwordAndSaltFromDatabase = getPasswordAndSalt(user);
         String unhashedPasswordFromPost = userDataFromPost.getPassword();
         if(passwordAndSaltFromDatabase == null) {
             throw new Exception("Password and salt fetched from database are null");
         }
         if (PasswordService.checkPassword(passwordAndSaltFromDatabase, unhashedPasswordFromPost)) {
-//            TODO: generate token (JWT?)
             String token = JWTTokenService.getNewToken(user);
             if(token == null){
                 throw new Exception("No token generated");
@@ -51,6 +61,7 @@ public class AuthenticationService {
         throw new Exception();
     }
 
+    // Extract password and salt from the user object.
     private PasswordAndSaltModel getPasswordAndSalt(UserDataModel user) {
         PasswordAndSaltModel passwordAndSaltModel = new PasswordAndSaltModel();
         passwordAndSaltModel.setPassword(user.getPassword());

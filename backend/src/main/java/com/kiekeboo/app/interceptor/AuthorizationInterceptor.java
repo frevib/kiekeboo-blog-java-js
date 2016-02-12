@@ -24,6 +24,19 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         this.jwtTokenService = jwtTokenService;
     }
 
+    /**
+     * Check if user is authenticated, by parsing the JsonWebToken (JWT). The JWT's HMAC is validated and the expiry time (timestamp) is checked.
+     * If the HMAC is not valid, the user is denied access to the application.
+     * If the expiry timestamp > current timestamp, the user is denied access to the application.
+     *
+     * @param request
+     * @param response
+     * @param handler
+     * @return
+     * @throws JwtException (and its subclasses)
+     * @throws IOException
+     */
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws JwtException, IOException {
         if(request.getMethod().equalsIgnoreCase("OPTIONS")) {
@@ -32,9 +45,12 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         }
         try {
             String tokenFromRequest = getToken(request);
-//            Check if token is valid. Throws SignatureException, ExpiredJwtException or JwtException if not valid
+
+            // Check if token is valid. Throws SignatureException, ExpiredJwtException or JwtException if not valid
             String jwt = jwtTokenService.isValidToken(tokenFromRequest);
-//            if jwt != null the refresh token is added as response header
+
+            // TODO: change name of TokenRefresher. Should be just "Token".
+            // If jwt != null the refresh token is added as response header
             if(jwt != null) {
                 response.addHeader("TokenRefresher", jwt);
             }
@@ -42,7 +58,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
         } catch (SignatureException e) {
             logger.warn("Unauthorized: " + e.getMessage());
-//            TODO: catch IOException from createJSONResponse --- not being caught at the moment!!
+            // TODO: catch IOException from createJSONResponse --- not being caught at the moment!!
             String message = "{\"message\":\"Invalid Autorization token!\"}";
             createJSONResponse(response, message);
             return false;
@@ -66,6 +82,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         response.addHeader("Content-Type", "application/json");
     }
 
+    // Get JsonWebToken from HTTP header.
     private String getToken(HttpServletRequest request) {
         final String authorizationHeader = request.getHeader("Authorization");
         if(authorizationHeader == null) {

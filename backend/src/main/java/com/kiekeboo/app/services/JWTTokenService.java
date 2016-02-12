@@ -16,7 +16,7 @@ public class JWTTokenService {
     @Value("${jwt.password}")
     private String password;
 
-//    Token expiration time in milliseconds
+    // Token expiration time in milliseconds
     @Value("${jwt.expirytime}")
     private long ttlMillis;
 
@@ -27,19 +27,29 @@ public class JWTTokenService {
         return createNewToken(user);
     }
 
-//    check if token is form valid and if HMAC is valid. If token expiration is < refreshtime, return new token.
+    /**
+     * Check if token syntax is valid, and if HMAC is valid. If token expiration is < refreshtime, return new token.
+     *
+     * @param jwt
+     * @return String containing Json web token
+     * @throws JwtException
+     */
     public String isValidToken(String jwt) throws JwtException {
         if(password == null) {
             throw new JwtException("No key set");
         }
-//        Check if signature is OK
+
+        // TODO:
+        // Check if JWT is signed
         if(!Jwts.parser().isSigned(jwt)) {
             throw new SignatureException("Not a signed JWT");
         }
         JwtParser jwtParser = Jwts.parser().setSigningKey(password);
-//        parse token, throws exception expiry date is due
+
+        // parse token, throws exception expiry date is due
         jwtParser.parse(jwt);
-//        check if token is expiry time < refreshtime. If true, generate new token with new expiration time.
+
+        // check if token is expiry time < refresh time. If true, generate new token with new expiration time.
         long expiryTime = jwtParser.parseClaimsJws(jwt).getBody().getExpiration().getTime();
         if(expiryTime - refreshtime < System.currentTimeMillis()) {
             UserDataModel userDataModel = new UserDataModel();
@@ -51,11 +61,18 @@ public class JWTTokenService {
         return null;
     }
 
+    /**
+     * Create a new Json web token and return this as a String.
+     *
+     * @param user
+     * @return String containing Json web token
+     * @throws JwtException
+     */
     private String createNewToken(UserDataModel user) throws JwtException {
         String jwt;
         try {
             jwt = Jwts.builder()
-//                    TODO: add role id to the JWT somehow
+            // TODO: add role id to the JWT somehow
                     .setSubject(user.getUsername())
                     .setExpiration(new Date(System.currentTimeMillis() + ttlMillis))
                     .signWith(SignatureAlgorithm.HS512, password)
@@ -65,17 +82,9 @@ public class JWTTokenService {
             logger.warn("Could not generate Key");
             return null;
         }
-//        TODO: encrypt jwt with AES-GCM and the Key
+        // TODO: encrypt jwt with AES-GCM and the Key
         return jwt;
     }
 
-
-
-//    public String encryptToken(String unencryptedToken) {
-////        get encryption key from xml. Use one key for all encryption for now
-//
-//
-//        return encryptedToken;
-//    }
 
 }

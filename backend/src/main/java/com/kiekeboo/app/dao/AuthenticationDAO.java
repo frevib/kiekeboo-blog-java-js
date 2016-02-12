@@ -24,6 +24,7 @@ public class AuthenticationDAO {
         this.sessionFactory = sessionFactory;
     }
 
+    // Get user information (in a UserDataModel object) from the database given the username.
     @Transactional
     public UserDataModel getUserFromDatabase(String username) throws HibernateException {
         String hql = "FROM UserDataModel U WHERE U.username = :username";
@@ -34,20 +35,10 @@ public class AuthenticationDAO {
             if(userData.size() < 1) {
                 logger.warn("No user found (empty resultset)");
             } else {
-                logger.warn("--CRITICAL!-- More than one user in resultset (!)");
+                logger.warn("More than one user in resultset (!)");
             }
             throw new HibernateException("Error fetching user from database");
         }
         return userData.get(0);
     }
-
-//    TODO: write this
-//    Temp always true for testing
-    @Transactional
-    public boolean addKeytoDatabase(String username) throws HibernateException {
-        String hql = "";
-        return true;
-    }
-
-
 }

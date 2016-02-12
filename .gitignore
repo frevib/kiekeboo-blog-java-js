@@ -4,6 +4,6 @@ backend/target/*
 *.iml
 .idea/*
 .DS_Store
-database.properties
-password.properties
+database*.properties
+jwt.properties
 fill_tables.sql

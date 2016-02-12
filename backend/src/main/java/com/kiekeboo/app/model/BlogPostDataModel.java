@@ -15,17 +15,8 @@ public class BlogPostDataModel implements BlogPostInterface {
 
     private int blogpostId;
     private Date date;
-
-    @Length(min = 1, max = 30)
-    @Pattern(regexp = "[\\w\\s]*", message = "not a valid writer")
     private String writer;
-
-//    @NotNull
-//    @TitleValidate
     private String title;
-
-//    @NotNull
-//    @Size(min=1, max=1500, message = "Too many characters")
     private String contents;
 
 
@@ -70,13 +61,11 @@ public class BlogPostDataModel implements BlogPostInterface {
         this.writer = writer;
     }
 
-
-//    TODO: this is a constructor you dummy!
     public BlogPostDataModel mapRequestToDataModel(BlogPostRequestModel blogPostRequestModel) {
         this.setTitle(blogPostRequestModel.getTitle());
         this.setContents(blogPostRequestModel.getContents());
         this.setDate(new Date());
-        // TODO: Fetch writer from session
+        // TODO: Fetch writer from session/ Database
         this.setWriter("El Escribador");
         return this;
     }

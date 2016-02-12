@@ -27,23 +27,23 @@
 
 	<context:property-placeholder location="classpath:database.properties, classpath:jwt.properties" />
 
-	<!--For AuthorizationInterceptor-->
+	<!--AuthorizationInterceptor-->
 	<bean id="authorizationInterceptor" class="com.kiekeboo.app.interceptor.AuthorizationInterceptor">
 		<constructor-arg ref="jwtTokenService"/>
 	</bean>
 
-	<!--For blog service-->
+	<!--Blog service-->
 	<bean id="blogDao" class="com.kiekeboo.app.dao.BlogDAO">
 		<constructor-arg>
 			<ref bean="sessionFactory" />
 		</constructor-arg>
 	</bean>
 
-	<!--For JWTTokenService-->
+	<!--JWTTokenService-->
 	<bean id="jwtTokenService" class="com.kiekeboo.app.services.JWTTokenService">
 	</bean>
 
-	<!--For authentication-->
+	<!--Authentication-->
 	<bean id="authenticationDao" class="com.kiekeboo.app.dao.AuthenticationDAO">
 		<constructor-arg>
 			<ref bean="sessionFactory" />
@@ -59,7 +59,7 @@
 		</constructor-arg>
 	</bean>
 
-	<!--For Hibernate-->
+	<!--Hibernate-->
 	<tx:annotation-driven/>
 	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />

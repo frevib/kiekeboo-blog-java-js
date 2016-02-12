@@ -35,15 +35,18 @@ public class AdminController {
     @RequestMapping(method = RequestMethod.POST, value = "/addpost", consumes = "application/json", produces = "application/json")
     public ResponseEntity<ResponseMessage> saveBlogPost(@RequestBody @Valid BlogPostRequestModel blogPostRequestModel, BindingResult bindingResult) throws Exception {
         logger.info("HIT: /addpost");
-//        Check if model binding (JSON -> BlogPostRequestModel) and validation of BlogPostRequestModel went OK
+
+        // Check if model binding (JSON -> BlogPostRequestModel) and validation of BlogPostRequestModel went OK
         if (bindingResult.hasErrors()) {
             logger.warn("Error in bindingresult: {}", bindingResult.toString());
             return new ResponseEntity<>(new ResponseMessage("Item NOT added, invalid characters in title or blog contents"), HttpStatus.BAD_REQUEST);
         }
-//        Map BlogPostRequestModel to BlogPostDataModel
+
+        // Map BlogPostRequestModel to BlogPostDataModel
         BlogPostDataModel blogPostDataModel = new BlogPostDataModel();
         blogPostDataModel.mapRequestToDataModel(blogPostRequestModel);
-//        Put blog post into the database
+
+        // Put blog post into the database
         try {
             blogDAO.saveBlogPost(blogPostDataModel);
             logger.info("Blog post successfully saved in database!");

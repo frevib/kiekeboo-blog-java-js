@@ -28,11 +28,12 @@ public class BlogController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "*")
-//    TODO: must return ViewModel
+    // TODO: must return ViewModel
     public ResponseEntity<BlogPostDataModel> getBlogPost() {
         logger.info("HIT: /*");
         BlogPostDataModel blogPostDataModel;
-//        request blog post from database
+
+        // Fetch blog post from database.
         try {
             blogPostDataModel = blogDAO.getBlogPostById(1);
         } catch (Exception e) {
@@ -46,10 +47,13 @@ public class BlogController {
     @RequestMapping(method = RequestMethod.GET, value = "/getblogpost/{id}")
     public ResponseEntity<BlogPostDataModel> getBlogPostById(@PathVariable int id) {
         logger.info("HIT: /getblogpost/{}", id);
-//        Validation for @PathVariable not supported, so created this QnD fix.. better use JAX-RS
-        if(id < 1 && id > 9999) {
+
+        // Validation for @PathVariable not supported, so created this QnD fix.. better use JAX-RS
+        if(id < 1 && id > 99999) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
+        // Fetch blog post from database by id.
         BlogPostDataModel blogPostDataModel;
         try {
             blogPostDataModel = blogDAO.getBlogPostById(id);
@@ -64,6 +68,8 @@ public class BlogController {
     @RequestMapping(method = RequestMethod.GET, value = "/getlatestblogposts")
     public ResponseEntity<List<BlogPostViewModel>> getLatestBlogPosts() {
         logger.info("HIT: /getlatestblogposts");
+
+        // Fetch blog posts from database.
         List<BlogPostViewModel> blogPostViewModelList;
         try {
             blogPostViewModelList = blogDAO.getLatestBlogPosts();
@@ -74,7 +80,6 @@ public class BlogController {
         }
         return new ResponseEntity<>(blogPostViewModelList, HttpStatus.OK);
     }
-
 
 //    TODO: search controller
 }

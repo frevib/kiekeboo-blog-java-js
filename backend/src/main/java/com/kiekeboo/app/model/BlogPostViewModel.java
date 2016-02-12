@@ -12,7 +12,7 @@ public class BlogPostViewModel implements BlogPostInterface {
     private Date date;
     private String writer;
 
-
+    // TODO: Remove unnecessary fields for view model
     public int getId() {
         return id;
     }

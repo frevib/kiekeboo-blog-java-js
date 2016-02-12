@@ -12,17 +12,16 @@ import java.util.Date;
 /**
  * Because the Date is serialized properly in the HTTP response by Jackson, this class is created.
  * With Jackson the date looks like this: 1379402301
- * Using this class the date look normal: 11-06-15
+ * Using this class the date looks normal: 11-06-15
  */
 public class CustomDateSerializerService extends JsonSerializer<Date> {
 
     @Override
     public void serialize(Date date, JsonGenerator gen, SerializerProvider serializers)
-            throws IOException, JsonProcessingException {
+            throws IOException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = simpleDateFormat.format(date);
         gen.writeString(formattedDate);
-
     }
 
 

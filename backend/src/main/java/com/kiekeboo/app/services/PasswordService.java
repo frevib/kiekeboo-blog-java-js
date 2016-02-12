@@ -9,11 +9,16 @@ import java.security.NoSuchAlgorithmException;
 
 public class PasswordService {
 
-//    Don't use static methods??
     private final static Logger logger = LoggerFactory.getLogger(PasswordService.class);
 
-//    Bcrypt is better! But for this simple blog hash+salt will suffice.
-//    Take the hashed password from the database and the unhashed password from user. Check if hash(passwordFromPost + salt) == passwordFromDatabase
+    /**
+     * Bcrypt is better! But for this simple blog hash+salt will suffice.
+     * Take the hashed password from the database and the unhashed password from user. Check if hash(passwordFromPost + salt) == passwordFromDatabase
+     *
+     * @param passwordAndSaltFromDatabase
+     * @param unhashedPasswordFromPost
+     * @return true/false, depending on if password given by user == password from database.
+     */
     public static boolean checkPassword(PasswordAndSaltModel passwordAndSaltFromDatabase, String unhashedPasswordFromPost) {
         logger.info("Checking password");
         String passwordAndSaltString = unhashedPasswordFromPost + passwordAndSaltFromDatabase.getSalt();
@@ -26,11 +31,17 @@ public class PasswordService {
         md.update(passwordAndSaltString.getBytes());
         byte[] hashedBytes = md.digest();
         String hashedString = bytesToHex(hashedBytes);
-//        TODO: only use lowercase in the database or else it will fail
+        // TODO: only use lowercase in the database or else it will fail
         return equalsSafe(hashedString.toLowerCase(), passwordAndSaltFromDatabase.getPassword());
     }
 
-//    Checks two different Strings if they are equal. To protect from timing attacks, XORing is used.
+    /**
+     * Checks two different Strings if they are equal. To protect from timing attacks, XORing is used.
+     *
+     * @param one
+     * @param two
+     * @return true/false, depending on if one == two.
+     */
     public static boolean equalsSafe(String one, String two) {
         boolean value = false;
         if (one.length() != two.length()) {
@@ -49,7 +60,7 @@ public class PasswordService {
         return value;
     }
 
-//    Taken from http://stackoverflow.com/a/9855338/3952065 but verified OK.
+    // Converts a byte array to a hex String Taken from http://stackoverflow.com/a/9855338/3952065 but verified OK.
     final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
     public static String bytesToHex(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];

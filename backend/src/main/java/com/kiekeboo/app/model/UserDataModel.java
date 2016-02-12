@@ -1,23 +1,16 @@
 package com.kiekeboo.app.model;
 
-import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 public class UserDataModel {
 
+    // TODO: use Hibernate annotations instead of XML mapping.
     private int userId;
     private Date loginDate;
     private String salt;
     private int roleId;
     private String encryptionKeyJWT;
-
-//    don't need to validate again in for the transport (database) data
-    // Only allow word characters, max length 30
-    @Pattern(regexp = "[\\w]{1,30}", message = "Username contains invalid characters")
     private String username;
-
-    // Only allow word characters, max length 50
-    @Pattern(regexp = "[\\w\\s]{1,50}", message = "Password contains invalid characters")
     private String password;
 
     public String getUsername() {

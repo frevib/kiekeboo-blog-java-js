@@ -14,7 +14,7 @@ public class BlogPostRequestModel implements BlogPostInterface {
     private String title;
 
     @NotNull
-    @Length(min=1, max=300, message = "Too many characters for blogpost contents")
+    @Length(min=1, max=2500, message = "Too many characters for blogpost contents")
     private String contents;
 
 

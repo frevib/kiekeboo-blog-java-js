@@ -39,7 +39,7 @@ public class AdminController {
         // Check if model binding (JSON -> BlogPostRequestModel) and validation of BlogPostRequestModel went OK
         if (bindingResult.hasErrors()) {
             logger.warn("Error in bindingresult: {}", bindingResult.toString());
-            return new ResponseEntity<>(new ResponseMessage("Item NOT added, invalid characters in title or blog contents"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseMessage("Item NOT added, invalid or too many characters in title or blog contents"), HttpStatus.BAD_REQUEST);
         }
 
         // Map BlogPostRequestModel to BlogPostDataModel

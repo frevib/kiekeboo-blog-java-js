@@ -25,7 +25,7 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 
-	<context:property-placeholder location="classpath:database.properties, classpath:jwt.properties" />
+	<context:property-placeholder location="classpath:database2.properties, classpath:jwt.properties" />
 
 	<!--AuthorizationInterceptor-->
 	<bean id="authorizationInterceptor" class="com.kiekeboo.app.interceptor.AuthorizationInterceptor">
@@ -72,9 +72,9 @@
 
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-		<property name="url" value="${database.url}"/>
-		<property name="username" value="${database.username}"/>
-		<property name="password" value="${database.password}"/>
+		<property name="url" value="${database2.url}"/>
+		<property name="username" value="${database2.username}"/>
+		<property name="password" value="${database2.password}"/>
 	</bean>
 
 

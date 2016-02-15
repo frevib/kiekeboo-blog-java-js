@@ -13,5 +13,16 @@ var validateTitle = function() {
         document.forms["addpostangular"]["submit"].setAttribute("disabled", "disabled");
     }
     console.log(title);
-}
+};
+
+var validateBlogpostcontents = function() {
+    var blogpostcontents = document.forms["addpostangular"]["contents"].value;
+    document.forms["addpostangular"]["submit"].removeAttribute("disabled");
+    var element = document.getElementById("validationLengthContents");
+    element.innerHTML = "";
+    if(blogpostcontents.length > 2500) {
+        element.innerHTML = "max amount of characters is 2500";
+        document.forms["addpostangular"]["submit"].setAttribute("disabled", "disabled");
+    }
+};
 

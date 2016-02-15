@@ -11,7 +11,7 @@
         <property name="title" column="title" type="string"/>
         <property name="contents" column="contents" type="string"/>
         <property name="date" column="datetime" type="date"/>
-        <property name="writer" column="writer" type="string"/>
+        <property name="writerId" column="writer" type="string"/>
     </class>
 
     <class name="UserDataModel" table="USERS">

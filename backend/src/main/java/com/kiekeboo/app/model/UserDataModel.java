@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class UserDataModel {
 
-    // TODO: use Hibernate annotations instead of XML mapping.
     private int userId;
     private Date loginDate;
     private String salt;
@@ -12,6 +11,24 @@ public class UserDataModel {
     private String encryptionKeyJWT;
     private String username;
     private String password;
+    private String email;
+    private Date createTime;
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getUsername() {
         return username;

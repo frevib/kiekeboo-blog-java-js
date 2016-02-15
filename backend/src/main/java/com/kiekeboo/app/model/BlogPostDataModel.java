@@ -3,22 +3,35 @@ package com.kiekeboo.app.model;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.kiekeboo.app.model.interfaces.BlogPostInterface;
 import com.kiekeboo.app.services.CustomDateSerializerService;
-import com.kiekeboo.app.validation.TitleValidate;
 import org.hibernate.validator.constraints.Length;
-
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
 public class BlogPostDataModel implements BlogPostInterface {
 
     private int blogpostId;
     private Date date;
-    private String writer;
+    private int writer;
     private String title;
     private String contents;
+    private boolean enabled;
+    private boolean commentsEnabled;
 
+    public boolean getCommentsEnabled() {
+        return commentsEnabled;
+    }
+
+    public void setCommentsEnabled(boolean commentsEnabled) {
+        this.commentsEnabled = commentsEnabled;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
     public String getTitle() {
         return title;
@@ -53,11 +66,11 @@ public class BlogPostDataModel implements BlogPostInterface {
         this.date = date;
     }
 
-    public String getWriter() {
+    public int getWriterId() {
         return writer;
     }
 
-    public void setWriter(String writer) {
+    public void setWriterId(int writer) {
         this.writer = writer;
     }
 
@@ -65,8 +78,8 @@ public class BlogPostDataModel implements BlogPostInterface {
         this.setTitle(blogPostRequestModel.getTitle());
         this.setContents(blogPostRequestModel.getContents());
         this.setDate(new Date());
-        // TODO: Fetch writer from session/ Database
-        this.setWriter("El Escribador");
+        // TODO: Fetch writer from session
+        this.setWriterId(1337);
         return this;
     }
 

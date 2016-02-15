@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.kiekeboo.app.model">
+
+    <class name="BlogPostDataModel" table="blogposts">
+        <id name="blogpostId" column="id_blogpost" type="integer">
+            <generator class="native"/>
+        </id>
+        <property name="writerId" column="id_author" type="integer"/>
+        <property name="title" column="title" type="string"/>
+        <property name="contents" column="contents" type="string"/>
+        <property name="enabled" column="enabled" type="boolean"/>
+        <property name="commentsEnabled" column="comments_enabled" type="boolean"/>
+        <property name="date" column="date_created" type="date"/>
+    </class>
+
+    <class name="com.kiekeboo.app.model.UserRolesDataModel" table="user_roles">
+        <id name="roleId" column="id_role" type="integer">
+            <generator class="native"/>
+        </id>
+        <property name="role" column="role" type="string"/>
+        <property name="roleDescription" column="role_description" type="string"/>
+    </class>
+
+    <class name="UserDataModel" table="users">
+        <id name="userId" column="id_user" type="integer">
+            <generator class="native"/>
+        </id>
+        <property name="roleId" column="id_role" type="java.lang.Integer"/>
+        <property name="username" column="username" type="string"/>
+        <property name="email" column="email" type="string"/>
+        <property name="password" column="password" type="string"/>
+        <property name="salt" column="salt" type="string"/>
+        <property name="createTime" column="create_time" type="date"/>
+    </class>
+
+</hibernate-mapping>
+

@@ -56,7 +56,7 @@ kiekebooApp.controller('showpostController', function($scope, $http, $routeParam
         });
 });
 
-kiekebooApp.controller('loginController', function($scope, $http, $window, $rootScope) {
+kiekebooApp.controller('loginController', function($scope, $http, $window) {
     var url = 'http://ubuntuserver:8080/kiekeboo-app-1.0-SNAPSHOT/login/login';
     $scope.submit = function() {
         var data = {
@@ -88,7 +88,7 @@ kiekebooApp.controller('logoutController', function($window) {
     $window.location.href = '/#/';
 });
 
-kiekebooApp.factory('authInterceptor', function($rootScope, $q, $window, $sce) {
+kiekebooApp.factory('authInterceptor', function($rootScope, $q, $window) {
     return {
         request: function(config) {
             config.headers = config.headers || {};

@@ -6,6 +6,7 @@
     <session-factory>
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="show_sql">true</property>
-        <mapping resource="hibernate.hbm.xml"/>
+        <!--<mapping resource="hibernate.hbm.xml"/>-->
+        <mapping resource="hibernate2.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

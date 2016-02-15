@@ -4,6 +4,7 @@ backend/target/*
 *.iml
 .idea/*
 .DS_Store
-database*.properties
+database.properties
+database2.properties
 jwt.properties
 fill_tables.sql

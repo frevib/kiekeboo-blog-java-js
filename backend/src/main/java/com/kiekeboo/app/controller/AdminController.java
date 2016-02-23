@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
 
-
 @Controller
 @RequestMapping("/admin")
 public class AdminController {

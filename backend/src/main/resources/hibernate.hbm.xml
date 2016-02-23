@@ -4,25 +4,45 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.kiekeboo.app.model">
 
-    <class name="BlogPostDataModel" table="BLOGPOST">
-        <id name="blogpostId" column="blog_id" type="integer">
+    <class name="BlogPostDataModel" table="blogposts" schema="kb_database">
+        <id name="blogpostId" column="id_blogpost" type="integer">
             <generator class="native"/>
         </id>
+        <property name="writerId" column="id_author" type="integer"/>
         <property name="title" column="title" type="string"/>
         <property name="contents" column="contents" type="string"/>
-        <property name="date" column="datetime" type="date"/>
-        <property name="writerId" column="writer" type="string"/>
+        <property name="enabled" column="enabled" type="boolean"/>
+        <property name="commentsEnabled" column="comments_enabled" type="boolean"/>
+        <property name="date" column="date_created" type="date"/>
     </class>
 
-    <class name="UserDataModel" table="USERS">
-        <id name="userId" column="user_id" type="integer">
+    <class name="UserRolesDataModel" table="user_roles" schema="kb_database">
+        <id name="roleId" column="id_role" type="integer">
             <generator class="native"/>
         </id>
+        <property name="role" column="role" type="string"/>
+        <property name="roleDescription" column="role_description" type="string"/>
+    </class>
+
+    <class name="UserDataModel" table="users" schema="kb_database">
+        <id name="userId" column="id_user" type="integer">
+            <generator class="native"/>
+        </id>
+        <property name="roleId" column="id_role" type="integer"/>
         <property name="username" column="username" type="string"/>
+        <property name="email" column="email" type="string"/>
         <property name="password" column="password" type="string"/>
-        <property name="roleId" column="role_id" type="integer"/>
-        <property name="salt" column="password_salt" type="string"/>
-        <!--<property name="encryptionKeyJWT" column="encryptionkeyjwt"/>-->
+        <property name="salt" column="salt" type="string"/>
+        <property name="createTime" column="create_time" type="date"/>
+    </class>
+    
+    <class name="CommentsDataModel" table="comments" schema="kb_database">
+        <id name="commentId" column="id_comment" type="integer">
+            <generator class="native" />
+        </id>
+        <property name="author" column="author"/>
+        <property name="commentContents" column="comment_contents"/>
+        <property name="enabled" column="enabled"/>
     </class>
 
 </hibernate-mapping>

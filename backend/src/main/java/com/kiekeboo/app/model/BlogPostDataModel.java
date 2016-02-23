@@ -79,7 +79,9 @@ public class BlogPostDataModel implements BlogPostInterface {
         this.setContents(blogPostRequestModel.getContents());
         this.setDate(new Date());
         // TODO: Fetch writer from session
-        this.setWriterId(1337);
+        this.setWriterId(1);
+        this.setEnabled(true);
+        this.setCommentsEnabled(true);
         return this;
     }
 

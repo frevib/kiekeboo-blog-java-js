@@ -20,6 +20,7 @@ public class JWTTokenService {
     @Value("${jwt.expirytime}")
     private long ttlMillis;
 
+    // Time when new token needs to sent to user. E.g. when expiry time is < 8min, send a new token.
     @Value("${jwt.refreshtime}")
     private long refreshtime;
 
